@@ -4,7 +4,7 @@
 #include <random>
 static const int NUM_THREADS = 12;
 
-std::vector<Point> jarvis::set_points(int size) {
+std::vector<Point> set_points(int size) {
     std::random_device dev;
     std::mt19937 gen(dev());
     std::uniform_real_distribution<> urd(-1000, 1000);
@@ -15,7 +15,7 @@ std::vector<Point> jarvis::set_points(int size) {
     return points;
 }
 
-int jarvis::find_lowest_left_most_point_index(
+int find_lowest_left_most_point_index(
     const std::vector<Point>& points) {
     int index = 0;
     int min_x = points[0].x;
@@ -47,7 +47,7 @@ int sq_distance(const Point& p0, const Point& p1) {
     return (p0.x - p1.x) * (p0.x - p1.x) + (p0.y - p1.y) * (p0.y - p1.y);
 }
 
-std::vector<Point> jarvis::convex_hull(const std::vector<Point>& points) {
+std::vector<Point> convex_hull(const std::vector<Point>& points) {
     std::vector<Point> input = points;
     int size = points.size();
     std::vector<Point> CH;
@@ -118,7 +118,7 @@ public:
     double Result() { return next; }
 };
 
-std::vector<Point> jarvis::convex_hull_tbb(const std::vector<Point>& points) {
+std::vector<Point> convex_hull_tbb(const std::vector<Point>& points) {
     std::vector<Point> input = points;
     int size = points.size();
     std::vector<Point> CH;
@@ -145,6 +145,7 @@ std::vector<Point> jarvis::convex_hull_tbb(const std::vector<Point>& points) {
     current = bottom_left_point_idx;
 
     tbb::task_scheduler_init init(NUM_THREADS);
+
     do {
         CH.push_back(input[current]);
         next = (current + 1) % size;
