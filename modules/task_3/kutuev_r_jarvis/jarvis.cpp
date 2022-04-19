@@ -1,7 +1,6 @@
 // Copyright 2022 Kutuev Roman
 #include "../../../modules/task_3/kutuev_r_jarvis/jarvis.h"
 
-#include <random>
 static const int NUM_THREADS = 12;
 
 std::vector<Point> set_points(int size) {
@@ -40,7 +39,7 @@ int orientation(const Point& p0, const Point& p1, const Point& p2) {
     else if (value > 0)
         return right;
     else
-        return left;
+        return -1;
 }
 
 int sq_distance(const Point& p0, const Point& p1) {
@@ -79,6 +78,7 @@ class JarvisFunctor {
     int bottom_left_point_idx;
     const std::vector<Point>& input;
     int sign;
+
 public:
     JarvisFunctor(int const _size, int _current, int _next,
         int const _bottom_left_point_idx, const std::vector<Point>& _CH,

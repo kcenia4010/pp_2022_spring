@@ -3,15 +3,15 @@
 #define MODULES_TASK_3_KUTUEV_R_JARVIS_JARVIS_H_
 
 #include <omp.h>
+#include <tbb/tbb.h>
+#include <random>
 #include <algorithm>
 #include <cmath>
 #include <cstdlib>
 #include <stack>
 #include <vector>
-#include <tbb/tbb.h>
 
 #define collinear 0
-#define left -1
 #define right 1
 
 struct Point {
