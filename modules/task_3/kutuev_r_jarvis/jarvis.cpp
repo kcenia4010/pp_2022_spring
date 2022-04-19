@@ -77,9 +77,8 @@ class JarvisFunctor {
     int next;
     int bottom_left_point_idx;
     const std::vector<Point>& input;
-    int sign;
 
-public:
+ public:
     JarvisFunctor(int const _size, int _current, int _next,
         int const _bottom_left_point_idx, const std::vector<Point>& _CH,
         const std::vector<Point>& _input)
@@ -90,6 +89,7 @@ public:
         input(_input) {}
 
     void operator()(const tbb::blocked_range<int>& range) {
+        int sign;
         for (int i = range.end() - 1; i >= range.begin(); i--)
             if (input[i].x != input[current].x || input[i].y != input[current].y) {
                 sign = orientation(input[current], input[i], input[next]);
@@ -109,6 +109,7 @@ public:
 
 
     void join(const JarvisFunctor& j) {
+        int sign;
         sign = orientation(input[current], input[j.next], input[next]);
         if (sign == right ||
             (sign == collinear && sq_distance(input[current], input[next]) <
