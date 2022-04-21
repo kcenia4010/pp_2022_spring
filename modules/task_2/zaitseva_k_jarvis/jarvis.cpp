@@ -88,7 +88,7 @@ std::vector<Point> Jarvis_parallel(std::vector<Point> points) {
   omp_set_num_threads(num_threads);
   int step = points.size() / num_threads;
 #pragma omp parallel
-  { 
+  {
     int th_num = omp_get_thread_num();
     auto end = th_num == (num_threads - 1) ? points.end()
                                      : points.begin() + (th_num + 1) * step;
