@@ -83,49 +83,20 @@ std::vector<Point> Generate(int n) {
 }
 
 std::vector<Point> Jarvis_parallel(std::vector<Point> points) {
-  int num_threads = 2;
+  int num_threads = 4;
+  std::vector<std::vector<Point>> shells(num_threads);
   omp_set_num_threads(num_threads);
-  std::vector<Point> mins(num_threads);
-  std::vector<int> mins_k(num_threads);
-  int n = points.size();
+  int step = points.size() / num_threads;
 #pragma omp parallel
-  {
+  { 
     int th_num = omp_get_thread_num();
-    mins[th_num] = points[0];
-    mins_k[th_num] = 0;
-#pragma omp for
-    for (int i = 1; i < n; i++) {
-      if (points[i] < mins[th_num]) {
-        mins[th_num] = points[i];
-        mins_k[th_num] = i;
-      }
-    }
+    auto end = th_num == (num_threads - 1) ? points.end()
+                                     : points.begin() + (th_num + 1) * step;
+    shells[th_num] =
+        Jarvis(std::vector<Point>(points.begin() + th_num * step, end));
   }
-  Point p0 = mins[0];
-  int k = mins_k[0];
-  for (int i = 1; i < num_threads; i++) {
-    if (mins[i] < p0) {
-      p0 = mins[i];
-      k = mins_k[i];
-    }
-  }
-  std::swap(points[k], points[0]);
-  Point p_next, p_i = p0;
-  int i = 1;
-  for (i = 1; i < n; i++) {
-    p_next = points[i];
-    k = i;
-    for (std::size_t j = i + 1; j < points.size(); j++) {
-      if (turn(p_i, p_next, points[j])) {
-        p_next = points[j];
-        k = j;
-      }
-    }
-    if (turn(p_i, p_next, p0)) {
-      break;
-    }
-    std::swap(points[k], points[i]);
-    p_i = p_next;
-  }
-  return std::vector<Point>(points.begin(), points.begin() + i);
+  std::vector<Point> new_points;
+  for (int i = 0; i < num_threads; i++)
+    std::copy(shells[i].begin(), shells[i].end(), std::back_inserter(new_points));
+  return Jarvis(new_points);
 }
