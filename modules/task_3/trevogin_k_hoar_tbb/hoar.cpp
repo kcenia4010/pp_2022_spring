@@ -1,18 +1,17 @@
-// Copyright 2022 Ermakov Pavel
-#include <algorithm>
-#include <ctime>
+// Copyright 2022 Trevogin Kirill
 #include <limits.h>
 #include <omp.h>
-#include <random>
 #include <tbb/blocked_range.h>
 #include <tbb/task.h>
 #include <tbb/tbb.h>
+#include <random>
 #include <utility>
+#include <algorithm>
+#include <ctime>
 #include <vector>
 #include "../../modules/task_3/trevogin_k_hoar_tbb/hoar.h"
 
-tbb::task* EvenSplitter::execute()
-{
+tbb::task* EvenSplitter::execute() {
     for (int i = 0; i < size1; i += 2)
         tmp[i] = mas[i];
     double* mas2 = mas + size1;
@@ -38,8 +37,7 @@ tbb::task* EvenSplitter::execute()
     }
     return NULL;
 }
-tbb::task* OddSplitter::execute()
-{
+tbb::task* OddSplitter::execute() {
     for (int i = 1; i < size1; i += 2)
         tmp[i] = mas[i];
     double* mas2 = mas + size1;
@@ -66,8 +64,7 @@ tbb::task* OddSplitter::execute()
     return NULL;
 }
 
-void SimpleComparator::operator()(const tbb::blocked_range<int>& r) const
-{
+void SimpleComparator::operator()(const tbb::blocked_range<int>& r) const {
     int begin = r.begin(), end = r.end();
     for (int i = begin; i < end; i++)
         if (mas[2 * i] < mas[2 * i - 1]) {
@@ -77,8 +74,7 @@ void SimpleComparator::operator()(const tbb::blocked_range<int>& r) const
         }
 }
 
-tbb::task* QuickParallelSorter::execute()
-{
+tbb::task* QuickParallelSorter::execute() {
     if (size <= portion) {
         TbbQuickSort(mas, 0, size - 1);
     } else {
@@ -103,26 +99,22 @@ tbb::task* QuickParallelSorter::execute()
     }
     return NULL;
 }
-void TbbParallelSort(double* inp, int size, int nThreads)
-{
+void TbbParallelSort(double* inp, int size, int nThreads) {
     double* tmp = new double[size];
     int portion = size / nThreads;
     if (size % nThreads != 0)
         portion++;
-    // std::cout << portion << '\n';
     QuickParallelSorter& sorter = *new (tbb::task::allocate_root())
-                                      QuickParallelSorter(inp, tmp, size, portion);
+    QuickParallelSorter(inp, tmp, size, portion);
     tbb::task::spawn_root_and_wait(sorter);
     delete[] tmp;
 }
 
-void TbbQuickSort(double* arr, int left, int right)
-{
+void TbbQuickSort(double* arr, int left, int right) {
     while (right > left) {
         int it_l = left;
         int it_r = right;
         double pivot = arr[(left + right) / 2];
-        // partition
         while (it_l <= it_r) {
             while (arr[it_l] < pivot) {
                 it_l++;
@@ -148,8 +140,7 @@ void TbbQuickSort(double* arr, int left, int right)
     return;
 }
 
-void getRandomArray(double* arr, int size)
-{
+void getRandomArray(double* arr, int size) {
     std::mt19937 gen(time(0));
     std::uniform_int_distribution<int> dist(-1000, 1000);
     for (int i = 0; i < size; ++i) {
@@ -158,7 +149,6 @@ void getRandomArray(double* arr, int size)
     return;
 }
 
-bool checkCorrectnessOfSort(double* arr, int size)
-{
+bool checkCorrectnessOfSort(double* arr, int size) {
     return std::is_sorted(arr, arr + size);
 }

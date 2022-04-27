@@ -1,4 +1,4 @@
-// Copyright 2022 Ermakov Pavel
+// Copyright 2022 Trevogin Kirill
 #include <gtest/gtest.h>
 #include <omp.h>
 #include <tbb/tbb.h>
@@ -6,8 +6,7 @@
 #include <vector>
 #include "../../modules/task_3/trevogin_k_hoar_tbb/hoar.h"
 
-TEST(Quick_Parallel_tbb, TestParallelSort)
-{
+TEST(Quick_Parallel_tbb, TestParallelSort) {
     int n = 100000;
     double* arr = new double[n];
     getRandomArray(arr, n);
@@ -15,8 +14,7 @@ TEST(Quick_Parallel_tbb, TestParallelSort)
     ASSERT_EQ(1, checkCorrectnessOfSort(arr, n));
 }
 
-TEST(Quick_Parallel_tbb, TestParallelSortWithOddThreads)
-{
+TEST(Quick_Parallel_tbb, TestParallelSortWithOddThreads) {
     int n = 100000;
     double* arr = new double[n];
     getRandomArray(arr, n);
@@ -24,8 +22,7 @@ TEST(Quick_Parallel_tbb, TestParallelSortWithOddThreads)
     ASSERT_EQ(1, checkCorrectnessOfSort(arr, n));
 }
 
-TEST(Quick_Parallel_tbb, TestParallelSortWithOddSize)
-{
+TEST(Quick_Parallel_tbb, TestParallelSortWithOddSize) {
     int n = 34859;
     double* arr = new double[n];
     getRandomArray(arr, n);
@@ -33,8 +30,7 @@ TEST(Quick_Parallel_tbb, TestParallelSortWithOddSize)
     ASSERT_EQ(1, checkCorrectnessOfSort(arr, n));
 }
 
-TEST(Quick_Parallel_tbb, TestWithReverseOrder)
-{
+TEST(Quick_Parallel_tbb, TestWithReverseOrder) {
     int n = 92832;
     double* arr = new double[n];
     for (int i = 0; i < n; ++i) {
@@ -44,8 +40,7 @@ TEST(Quick_Parallel_tbb, TestWithReverseOrder)
     ASSERT_EQ(1, checkCorrectnessOfSort(arr, n));
 }
 
-TEST(Quick_Parallel_tbb, TestWithZeros)
-{
+TEST(Quick_Parallel_tbb, TestWithZeros) {
     int n = 9999;
     double* arr = new double[n];
     for (int i = 0; i < n; ++i) {
@@ -55,8 +50,7 @@ TEST(Quick_Parallel_tbb, TestWithZeros)
     ASSERT_EQ(1, checkCorrectnessOfSort(arr, n));
 }
 
-int main(int argc, char** argv)
-{
+int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

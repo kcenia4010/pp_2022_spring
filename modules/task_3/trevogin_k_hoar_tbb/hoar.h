@@ -1,4 +1,4 @@
-// Copyright 2022 Ermakov Pavel
+// Copyright 2022 Trevogin Kirill
 #ifndef MODULES_TASK_3_TREVOGIN_K_HOAR_TBB_HOAR_H_
 #define MODULES_TASK_3_TREVOGIN_K_HOAR_TBB_HOAR_H_
 #include <tbb/blocked_range.h>
@@ -79,4 +79,4 @@ void TbbParallelSort(double* inp, int size,
 void TbbQuickSort(double* arr, int left, int right);
 void getRandomArray(double* arr, int size);
 bool checkCorrectnessOfSort(double* arr, int size);
-#endif // MODULES_TASK_3_TREVOGIN_K_HOAR_TBB_HOAR_H_
+#endif  // MODULES_TASK_3_TREVOGIN_K_HOAR_TBB_HOAR_H_
