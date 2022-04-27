@@ -26,8 +26,8 @@ TEST(Quick_Sort_seq, Can_Sort_Random_Array) {
 TEST(Quick_Sort_seq, Can_Sort_With_Double_Elems) {
     int n = 10000;
     std::vector<double> vec = getRandomVector(n);
-    vec[999] = -23.335;
     vec[560] = 2354.52;
+    vec[999] = -23.335;
     quickSort(0, n - 1, &vec);
     ASSERT_EQ(1, checkCorrectnessOfSort(&vec));
 }
