@@ -5,13 +5,13 @@
 #include <tbb/task.h>
 
 class EvenSplitter : public tbb::task {
-private:
+ private:
     double* mas;
     double* tmp;
     int size1;
     int size2;
 
-public:
+ public:
     EvenSplitter(double* _mas, double* _tmp, int _size1,
         int _size2)
         : mas(_mas)
@@ -24,13 +24,13 @@ public:
 };
 
 class OddSplitter : public tbb::task {
-private:
+ private:
     double* mas;
     double* tmp;
     int size1;
     int size2;
 
-public:
+ public:
     OddSplitter(double* _mas, double* _tmp, int _size1,
         int _size2)
         : mas(_mas)
@@ -43,10 +43,10 @@ public:
 };
 
 class SimpleComparator {
-private:
+ private:
     double* mas;
 
-public:
+ public:
     explicit SimpleComparator(double* _mas)
         : mas(_mas)
     {
@@ -55,13 +55,13 @@ public:
 };
 
 class QuickParallelSorter : public tbb::task {
-private:
+ private:
     double* mas;
     double* tmp;
     int size;
     int portion;
 
-public:
+ public:
     QuickParallelSorter(double* _mas, double* _tmp, int _size,
         int _portion)
         : mas(_mas)
