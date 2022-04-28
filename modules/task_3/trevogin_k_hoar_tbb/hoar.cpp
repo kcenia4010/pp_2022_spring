@@ -54,7 +54,7 @@ class qHoareSortTask : public tbb::task {
                 if (left_index < right) {
                     task::spawn_and_wait_for_all(*new (tbb::task::allocate_child())
                         qHoareSortTask(arr, left_index, right));
-                }else {
+                } else {
                     task::spawn_and_wait_for_all(*new (tbb::task::allocate_child())
                         qHoareSortTask(arr, left, right_index));
                 }
