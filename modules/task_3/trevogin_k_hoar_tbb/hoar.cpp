@@ -1,8 +1,6 @@
 // Copyright 2022 Trevogin Kirill
 #include <limits.h>
 #include <omp.h>
-#include <tbb/blocked_range.h>
-#include <tbb/task.h>
 #include <tbb/tbb.h>
 #include <random>
 #include <utility>

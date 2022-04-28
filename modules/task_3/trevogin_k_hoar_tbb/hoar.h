@@ -1,8 +1,7 @@
 // Copyright 2022 Trevogin Kirill
 #ifndef MODULES_TASK_3_TREVOGIN_K_HOAR_TBB_HOAR_H_
 #define MODULES_TASK_3_TREVOGIN_K_HOAR_TBB_HOAR_H_
-#include <tbb/blocked_range.h>
-#include <tbb/task.h>
+#include <tbb/tbb.h>
 
 class EvenSplitter : public tbb::task {
  private:
