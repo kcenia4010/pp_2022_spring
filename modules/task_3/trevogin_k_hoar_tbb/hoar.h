@@ -17,8 +17,7 @@ class EvenSplitter : public tbb::task {
         : mas(_mas)
         , tmp(_tmp)
         , size1(_size1)
-        , size2(_size2)
-    {
+        , size2(_size2) {
     }
     tbb::task* execute();
 };
@@ -36,8 +35,7 @@ class OddSplitter : public tbb::task {
         : mas(_mas)
         , tmp(_tmp)
         , size1(_size1)
-        , size2(_size2)
-    {
+        , size2(_size2) {
     }
     tbb::task* execute();
 };
@@ -67,8 +65,7 @@ class QuickParallelSorter : public tbb::task {
         : mas(_mas)
         , tmp(_tmp)
         , size(_size)
-        , portion(_portion)
-    {
+        , portion(_portion) {
     }
     tbb::task* execute();
 };
