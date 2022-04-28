@@ -1,56 +1,100 @@
 // Copyright 2022 Trevogin Kirill
-#include <gtest/gtest.h>
-#include <omp.h>
+#include "../../../modules/task_3/trevogin_k_hoar_tbb/hoar.h"
+#include "gtest/gtest.h"
+#include <algorithm>
+#include <cmath>
+#include <ctime>
+#include <iostream>
+#include <random>
 #include <tbb/tbb.h>
-#include <time.h>
+#include <utility>
 #include <vector>
-#include "../../modules/task_3/trevogin_k_hoar_tbb/hoar.h"
 
-TEST(Quick_Parallel_tbb, TestParallelSort) {
-    int n = 100000;
-    double* arr = new double[n];
-    getRandomArray(arr, n);
-    TbbParallelSort(arr, n, 8);
-    ASSERT_EQ(1, checkCorrectnessOfSort(arr, n));
+#define N 100000
+
+TEST(Hoare_Quick_Sort_TBB, Can_Sort_Correctly) {
+    double* arr = new double[N];
+    Get_Random_Array(arr, N);
+    qHoareSortTbb(arr, N);
+    ASSERT_EQ(1, IsSorted(arr, N));
 }
-
-TEST(Quick_Parallel_tbb, TestParallelSortWithOddThreads) {
-    int n = 100000;
-    double* arr = new double[n];
-    getRandomArray(arr, n);
-    TbbParallelSort(arr, n, 5);
-    ASSERT_EQ(1, checkCorrectnessOfSort(arr, n));
-}
-
-TEST(Quick_Parallel_tbb, TestParallelSortWithOddSize) {
-    int n = 34859;
-    double* arr = new double[n];
-    getRandomArray(arr, n);
-    TbbParallelSort(arr, n, 8);
-    ASSERT_EQ(1, checkCorrectnessOfSort(arr, n));
-}
-
-TEST(Quick_Parallel_tbb, TestWithReverseOrder) {
-    int n = 92832;
-    double* arr = new double[n];
-    for (int i = 0; i < n; ++i) {
-        arr[i] = n - i;
-    }
-    TbbParallelSort(arr, n, 7);
-    ASSERT_EQ(1, checkCorrectnessOfSort(arr, n));
-}
-
-TEST(Quick_Parallel_tbb, TestWithZeros) {
-    int n = 9999;
-    double* arr = new double[n];
-    for (int i = 0; i < n; ++i) {
+TEST(Hoare_Quick_Sort_TBB, Can_Sort_Empty_Array) {
+    double* arr = new double[N];
+    for (int i = 0; i < N; i++) {
         arr[i] = 0;
     }
-    TbbParallelSort(arr, n, 6);
-    ASSERT_EQ(1, checkCorrectnessOfSort(arr, n));
+    qHoareSortTbb(arr, N);
+    double sum_element = 0.0;
+    for (int i = 0; i < N; i++) {
+        sum_element += arr[i];
+    }
+    ASSERT_EQ(sum_element, 0);
+}
+TEST(Hoare_Quick_Sort_TBB, Can_Sort_Opposite_Elements) {
+    double* arr = new double[N];
+    Get_Random_Array(arr, N);
+    for (int i = 0; i < N; i += 2) {
+        arr[i] = arr[i + 1] * (-1);
+    }
+    double* arr2 = new double[N];
+    Copy_elements(arr, arr2, N);
+    qHoareSortTbb(arr, N);
+    qHoareSort(arr2, 0, N - 1);
+    ASSERT_EQ((int)std::equal(&arr[0], &arr[N], &arr2[0]), 1);
+}
+TEST(Hoare_Quick_Sort_TBB, Can_Sort_Already_Sorted_Elements) {
+    double* arr = new double[N];
+    Get_Random_Array(arr, N);
+    qHoareSort(arr, 0, N - 1);
+    double* arr2 = new double[N];
+    Copy_elements(arr, arr2, N);
+    qHoareSortTbb(arr, N);
+    ASSERT_EQ((int)std::equal(&arr[0], &arr[N], &arr2[0]), 1);
+}
+TEST(Hoare_Quick_Sort_TBB, Can_Sort_Mixed_Array) {
+    double* arr = new double[N];
+    Get_Random_Array(arr, N);
+    qHoareSort(arr, 0, N - 1);
+    double* arr2 = new double[N];
+    Copy_elements(arr, arr2, N);
+    for (int i = 2; i < N; i += 3) {
+        double temp = arr[i - 2];
+        arr[i - 2] = arr[i];
+        arr[i] = temp;
+    }
+    qHoareSortTbb(arr, N);
+    ASSERT_EQ((int)std::equal(&arr[0], &arr[N], &arr2[0]), 1);
+}
+TEST(Hoare_Quick_Sort_TBB, DISABLED_Compare_Seq_and_Tbb_Average_Time) {
+    double* arr = new double[N];
+    double* arr2 = new double[N];
+    std::vector<bool> sorted;
+
+    Get_Random_Array(arr, N);
+    Copy_elements(arr, arr2, N);
+
+    tbb::tick_count t1 = tbb::tick_count::now();
+    qHoareSort(arr2, 0, N - 1);
+    double seq_time = (tbb::tick_count::now() - t1).seconds();
+    std::cout << "Sequential time: " << seq_time << " s" << '\n';
+    sorted.push_back(IsSorted(arr2, N));
+
+    tbb::tick_count t2 = tbb::tick_count::now();
+    qHoareSortTbb(arr, N);
+    double parallel_time = (tbb::tick_count::now() - t2).seconds();
+    std::cout << "Parallel tbb time: " << parallel_time << " s" << '\n';
+    std::cout << "Acceleration = seqtime/partime = " << seq_time / parallel_time << " " << '\n';
+    sorted.push_back(IsSorted(arr, N));
+
+    bool x = true;
+    for (auto i : sorted)
+        x = x && i;
+
+    ASSERT_EQ(1, x);
 }
 
 int main(int argc, char** argv) {
+    tbb::task_scheduler_init init(tbb::task_scheduler_init::automatic);
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

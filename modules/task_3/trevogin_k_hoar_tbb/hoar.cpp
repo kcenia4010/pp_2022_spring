@@ -1,152 +1,120 @@
 // Copyright 2022 Trevogin Kirill
-#include <limits.h>
-#include <omp.h>
-#include <tbb/tbb.h>
-#include <random>
-#include <utility>
-#include <algorithm>
+#include "../../../modules/task_3/trevogin_k_hoar_tbb/hoar.h"
+#include <cmath>
 #include <ctime>
+#include <iostream>
+#include <random>
+#include <tbb/tbb.h>
+#include <utility>
 #include <vector>
-#include "../../modules/task_3/trevogin_k_hoar_tbb/hoar.h"
 
-tbb::task* EvenSplitter::execute() {
-    for (int i = 0; i < size1; i += 2)
-        tmp[i] = mas[i];
-    double* mas2 = mas + size1;
-    int a = 0;
-    int b = 0;
-    int i = 0;
-    while ((a < size1) && (b < size2)) {
-        if (tmp[a] <= mas2[b]) {
-            mas[i] = tmp[a];
-            a += 2;
+class qHoareSortTask : public tbb::task {
+ private:
+    double* arr;
+    int left_index, right_index;
+
+ public:
+    qHoareSortTask(double* arr1, int left_index1, int right_index1)
+        : arr(arr1)
+        , left_index(left_index1)
+        , right_index(right_index1) {
+    }
+    task* execute()
+    {
+        int min_parallel_length = 50;
+        if (right_index - left_index <= min_parallel_length) {
+            qHoareSort(arr, left_index, right_index);
         } else {
-            mas[i] = mas2[b];
-            b += 2;
-        }
-        i += 2;
-    }
-    if (a == size1) {
-        for (int j = b; j < size2; j += 2, i += 2)
-            mas[i] = mas2[j];
-    } else {
-        for (int j = a; j < size1; j += 2, i += 2)
-            mas[i] = tmp[j];
-    }
-    return NULL;
-}
-tbb::task* OddSplitter::execute() {
-    for (int i = 1; i < size1; i += 2)
-        tmp[i] = mas[i];
-    double* mas2 = mas + size1;
-    int a = 1;
-    int b = 1;
-    int i = 1;
-    while ((a < size1) && (b < size2)) {
-        if (tmp[a] <= mas2[b]) {
-            mas[i] = tmp[a];
-            a += 2;
-        } else {
-            mas[i] = mas2[b];
-            b += 2;
-        }
-        i += 2;
-    }
-    if (a == size1) {
-        for (int j = b; j < size2; j += 2, i += 2)
-            mas[i] = mas2[j];
-    } else {
-        for (int j = a; j < size1; j += 2, i += 2)
-            mas[i] = tmp[j];
-    }
-    return NULL;
-}
+            int left = left_index;
+            int right = right_index;
+            int pi = arr[(left + right) / 2];
 
-void SimpleComparator::operator()(const tbb::blocked_range<int>& r) const {
-    int begin = r.begin(), end = r.end();
-    for (int i = begin; i < end; i++)
-        if (mas[2 * i] < mas[2 * i - 1]) {
-            double _tmp = mas[2 * i - 1];
-            mas[2 * i - 1] = mas[2 * i];
-            mas[2 * i] = _tmp;
-        }
-}
-
-tbb::task* QuickParallelSorter::execute() {
-    if (size <= portion) {
-        TbbQuickSort(mas, 0, size - 1);
-    } else {
-        int s = size / 2 + (size / 2) % 2;
-        QuickParallelSorter& sorter1 = *new (allocate_child())
-                                           QuickParallelSorter(mas, tmp, s, portion);
-        QuickParallelSorter& sorter2 = *new (allocate_child())
-                                           QuickParallelSorter(mas + s, tmp + s, size - s,
-                                               portion);
-        set_ref_count(3);
-        spawn(sorter1);
-        spawn_and_wait_for_all(sorter2);
-        // std::cout << s << " " << size - s << '\n';
-        EvenSplitter& splitter1 = *new (allocate_child()) EvenSplitter(mas, tmp, s, size - s);
-        OddSplitter& splitter2 = *new (allocate_child()) OddSplitter(mas, tmp, s, size - s);
-        set_ref_count(3);
-        spawn(splitter1);
-        spawn_and_wait_for_all(splitter2);
-
-        tbb::parallel_for(tbb::blocked_range<int>(1, (size + 1) / 2),
-            SimpleComparator(mas));
-    }
-    return NULL;
-}
-void TbbParallelSort(double* inp, int size, int nThreads) {
-    double* tmp = new double[size];
-    int portion = size / nThreads;
-    if (size % nThreads != 0)
-        portion++;
-    QuickParallelSorter& sorter = *new (tbb::task::allocate_root())
-    QuickParallelSorter(inp, tmp, size, portion);
-    tbb::task::spawn_root_and_wait(sorter);
-    delete[] tmp;
-}
-
-void TbbQuickSort(double* arr, int left, int right) {
-    while (right > left) {
-        int it_l = left;
-        int it_r = right;
-        double pivot = arr[(left + right) / 2];
-        while (it_l <= it_r) {
-            while (arr[it_l] < pivot) {
-                it_l++;
+            while (left <= right) {
+                if (pi > arr[left]) {
+                    left++;
+                } else {
+                    if (arr[right] > pi) {
+                        right--;
+                    } else {
+                        std::swap(arr[left], arr[right]);
+                        right--;
+                        left++;
+                    }
+                }
             }
-            while (arr[it_r] > pivot) {
-                it_r--;
-            }
-            if (it_l <= it_r) {
-                std::swap(arr[it_l], arr[it_r]);
-                it_l++;
-                it_r--;
+
+            tbb::task_list tasks_list;
+            tasks_list.push_back(*new (tbb::task::allocate_child()) qHoareSortTask(arr, left, right_index));
+            tasks_list.push_back(*new (tbb::task::allocate_child()) qHoareSortTask(arr, left_index, right));
+
+            if (left_index < right && right_index > left) {
+                set_ref_count(3);
+                task::spawn_and_wait_for_all(tasks_list);
+            } else {
+                set_ref_count(2);
+                if (left_index < right) {
+                    task::spawn_and_wait_for_all(*new (tbb::task::allocate_child()) qHoareSortTask(arr, left_index, right));
+                } else {
+                    task::spawn_and_wait_for_all(*new (tbb::task::allocate_child()) qHoareSortTask(arr, left, right_index));
+                }
             }
         }
-        // recursion
-        if (2 * it_l > left + right) {
-            TbbQuickSort(arr, it_l, right);
-            right = it_l - 1;
-        } else {
-            TbbQuickSort(arr, left, it_l - 1);
-            left = it_l;
+        return NULL;
+    }
+};
+
+void qHoareSortTbb(double* arr, int n) {
+    qHoareSortTask& HoareSort = *new (tbb::task::allocate_root()) qHoareSortTask(arr, 0, n - 1);
+    tbb::task::spawn_root_and_wait(HoareSort);
+}
+
+void Get_Random_Array(double* arr, int size) {
+    std::mt19937 generator(time(0));
+    std::uniform_int_distribution<> dist(-100000, 1000000);
+    for (int i = 0; i <= size; i++) {
+        arr[i] = dist(generator);
+    }
+}
+
+int HoarePartition(double* arr, int left_index, int right_index) {
+    double pivot = arr[(right_index + left_index) / 2];
+    int i = left_index - 1, j = right_index + 1;
+
+    while (true) {
+        do {
+            i++;
+        } while (arr[i] < pivot);
+
+        do {
+            j--;
+        } while (arr[j] > pivot);
+
+        if (i >= j)
+            return j;
+
+        std::swap(arr[i], arr[j]);
+    }
+}
+
+void qHoareSort(double* arr, int left_index, int right_index) {
+    if (left_index < right_index) {
+        int pi = HoarePartition(arr, left_index, right_index);
+        qHoareSort(arr, left_index, pi);
+        qHoareSort(arr, pi + 1, right_index);
+    }
+}
+
+int IsSorted(double* arr, int n) {
+    for (int i = 0; i < n - 1; i++) {
+        if (arr[i] > arr[i + 1]) {
+            return 0;
         }
     }
-    return;
+    return 1;
 }
 
-void getRandomArray(double* arr, int size) {
-    std::mt19937 gen(time(0));
-    std::uniform_int_distribution<int> dist(-1000, 1000);
-    for (int i = 0; i < size; ++i) {
-        arr[i] = dist(gen);
+void Copy_elements(double* a1, double* a2, int n) {
+    for (int i = 0; i < n; i++) {
+        a2[i] = a1[i];
     }
-    return;
-}
-
-bool checkCorrectnessOfSort(double* arr, int size) {
-    return std::is_sorted(arr, arr + size);
 }
