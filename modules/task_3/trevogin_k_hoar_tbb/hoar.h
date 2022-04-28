@@ -46,8 +46,7 @@ class SimpleComparator {
 
  public:
     explicit SimpleComparator(double* _mas)
-        : mas(_mas)
-    {
+        : mas(_mas) {
     }
     void operator()(const tbb::blocked_range<int>& r) const;
 };
