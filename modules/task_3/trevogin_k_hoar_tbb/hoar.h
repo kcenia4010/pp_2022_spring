@@ -33,8 +33,8 @@ class OddSplitter : public tbb::task {
     OddSplitter(double* _mas, double* _tmp, int _size1,
         int _size2)
         : mas(_mas)
-        , tmp(_tmp)
         , size1(_size1)
+        , tmp(_tmp)
         , size2(_size2) {
     }
     tbb::task* execute();
