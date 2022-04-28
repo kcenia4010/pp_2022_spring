@@ -19,8 +19,7 @@ class qHoareSortTask : public tbb::task {
         , left_index(left_index1)
         , right_index(right_index1) {
     }
-    task* execute()
-    {
+    task* execute() {
         int min_parallel_length = 50;
         if (right_index - left_index <= min_parallel_length) {
             qHoareSort(arr, left_index, right_index);
@@ -54,7 +53,7 @@ class qHoareSortTask : public tbb::task {
                 set_ref_count(2);
                 if (left_index < right) {
                     task::spawn_and_wait_for_all(*new (tbb::task::allocate_child()) qHoareSortTask(arr, left_index, right));
-                } else {
+                }else {
                     task::spawn_and_wait_for_all(*new (tbb::task::allocate_child()) qHoareSortTask(arr, left, right_index));
                 }
             }
