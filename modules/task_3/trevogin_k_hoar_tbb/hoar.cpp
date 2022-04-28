@@ -52,9 +52,11 @@ class qHoareSortTask : public tbb::task {
             } else {
                 set_ref_count(2);
                 if (left_index < right) {
-                    task::spawn_and_wait_for_all(*new (tbb::task::allocate_child()) qHoareSortTask(arr, left_index, right));
+                    task::spawn_and_wait_for_all(*new (tbb::task::allocate_child())
+                        qHoareSortTask(arr, left_index, right));
                 }else {
-                    task::spawn_and_wait_for_all(*new (tbb::task::allocate_child()) qHoareSortTask(arr, left, right_index));
+                    task::spawn_and_wait_for_all(*new (tbb::task::allocate_child())
+                        qHoareSortTask(arr, left, right_index));
                 }
             }
         }
