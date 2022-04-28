@@ -1,14 +1,14 @@
 // Copyright 2022 Trevogin Kirill
-#include "../../../modules/task_3/trevogin_k_hoar_tbb/hoar.h"
-#include "gtest/gtest.h"
+#include <tbb/tbb.h>
 #include <algorithm>
 #include <cmath>
 #include <ctime>
 #include <iostream>
 #include <random>
-#include <tbb/tbb.h>
 #include <utility>
 #include <vector>
+#include "../../../modules/task_3/trevogin_k_hoar_tbb/hoar.h"
+#include "gtest/gtest.h"
 
 #define N 100000
 

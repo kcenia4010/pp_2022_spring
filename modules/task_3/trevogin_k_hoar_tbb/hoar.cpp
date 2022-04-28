@@ -1,5 +1,4 @@
 // Copyright 2022 Trevogin Kirill
-#include "../../../modules/task_3/trevogin_k_hoar_tbb/hoar.h"
 #include <cmath>
 #include <ctime>
 #include <iostream>
@@ -7,6 +6,7 @@
 #include <tbb/tbb.h>
 #include <utility>
 #include <vector>
+#include "../../../modules/task_3/trevogin_k_hoar_tbb/hoar.h"
 
 class qHoareSortTask : public tbb::task {
  private:
