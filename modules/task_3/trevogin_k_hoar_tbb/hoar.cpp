@@ -1,9 +1,9 @@
 // Copyright 2022 Trevogin Kirill
+#include <tbb/tbb.h>
 #include <cmath>
 #include <ctime>
 #include <iostream>
 #include <random>
-#include <tbb/tbb.h>
 #include <utility>
 #include <vector>
 #include "../../../modules/task_3/trevogin_k_hoar_tbb/hoar.h"
