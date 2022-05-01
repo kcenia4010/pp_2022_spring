@@ -28,10 +28,10 @@ std::vector<double> MatrMultVec(const std::vector<std::vector<double>>& M,
 }
 std::vector<double> MatrMultVecPar(const std::vector<std::vector<double>>& M,
  const std::vector<double>& v, int n) {
-    size_t count = M.size();
+    int count = M.size();
     std::vector<double> res(count);
     #pragma omp parallel  for num_threads(n)
-    for (size_t i = 0; i < count; i++) {
+    for (int i = 0; i < count; i++) {
         res[i] = VecMultVec(M[i], v);
     }
     return res;
