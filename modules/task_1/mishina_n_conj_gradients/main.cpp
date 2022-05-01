@@ -14,7 +14,7 @@ TEST(Conjugate_gradient, TEST_VecMultNum) {
     double n = 3;
     std::vector<double> sol = VecMultNum(a, n);
     std::vector<double> res = { 12, 15 };
-    for (int i = 0; i < res.size(); ++i) {
+    for (size_t i = 0; i < res.size(); ++i) {
         ASSERT_EQ(sol[i], res[i]);
     }
 }
@@ -23,7 +23,7 @@ TEST(Conjugate_gradient, TEST_VecSum) {
     std::vector<double> b = { 2, 11 };
     std::vector<double> sol = VecSum(a, b);
     std::vector<double> res = { 6, 16 };
-    for (int i = 0; i < res.size(); ++i) {
+    for (size_t i = 0; i < res.size(); ++i) {
         ASSERT_EQ(sol[i], res[i]);
     }
 }
@@ -31,7 +31,7 @@ TEST(Conjugate_gradient, TEST_VecOtr) {
     std::vector<double> a = { 4, 5 };
     std::vector<double> sol = VecOtr(a);
     std::vector<double> res = { -4, -5 };
-    for (int i = 0; i < res.size(); ++i) {
+    for (size_t i = 0; i < res.size(); ++i) {
         ASSERT_EQ(sol[i], res[i]);
     }
 }
@@ -41,7 +41,7 @@ TEST(Conjugate_gradient, TEST_MatrMultVec) {
 
     std::vector<double> sol = MatrMultVec(A, b);
     std::vector<double> res = { 19, 52 };
-    for (int i = 0; i < res.size(); ++i) {
+    for (size_t i = 0; i < res.size(); ++i) {
         ASSERT_EQ(sol[i], res[i]);
     }
 }
@@ -51,7 +51,7 @@ TEST(Conjugate_gradient, TEST_2x2) {
 
     std::vector<double> sol = ConjGrad(A, b);
     std::vector<double> res = { -17, 7 };
-    for (int i = 0; i < res.size(); ++i) {
+    for (size_t i = 0; i < res.size(); ++i) {
         ASSERT_NEAR(sol[i], res[i], 0.5);
     }
 }
@@ -65,7 +65,7 @@ TEST(Conjugate_gradient, TEST_5x5) {
 
     std::vector<double> x = ConjGrad(A, b);
     std::vector<double> res = { 3.33, -0.33, -7.33, 10.66, -7};
-    for (int i = 0; i < res.size(); ++i) {
+    for (size_t i = 0; i < res.size(); ++i) {
         ASSERT_NEAR(x[i], res[i], 0.5);
     }
 }
