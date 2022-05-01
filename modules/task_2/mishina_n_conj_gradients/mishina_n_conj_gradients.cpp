@@ -31,7 +31,7 @@ std::vector<double> MatrMultVecPar(const std::vector<std::vector<double>>& M,
     size_t count = M.size();
     std::vector<double> res(count);
     #pragma omp parallel  for num_threads(n)
-    for (int i = 0; i < count; i++) {
+    for (size_t i = 0; i < count; i++) {
         res[i] = VecMultVec(M[i], v);
     }
     return res;
@@ -97,15 +97,15 @@ std::vector<double> ConjGradPar(const std::vector<std::vector<double>>& M,
 }
 std::vector<double> RandVec(int count) {
     std::vector<double> res(count);
-    for (size_t i = 0; i < count; i++) {
+    for (int i = 0; i < count; i++) {
         res[i] = std::rand() % 100;
     }
     return res;
 }
 std::vector<std::vector<double>> RandMatr(int count) {
     std::vector<std::vector<double>> res(count, std::vector<double>(count));
-    for (size_t i = 0; i < count; i++) {
-        for (size_t j = 0; j < count; j++) {
+    for (int i = 0; i < count; i++) {
+        for (int j = 0; j < count; j++) {
             if (j < i) {
                 res[i][j] = res[j][i];
             } else {
