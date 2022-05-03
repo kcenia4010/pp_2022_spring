@@ -14,6 +14,16 @@ std::vector<std::pair<double, double>> gen_points(std::size_t size) {
   return result;
 }
 
+std::vector<std::pair<double, double>> gen_random_points(std::size_t size) {
+  std::mt19937 rand_r(time(0));
+  std::vector<std::pair<double, double>> vec(size);
+  for (std::size_t i = 0; i < size; ++i) {
+    vec[i].first = rand_r() % 100;
+    vec[i].second = rand_r() % 100;
+  }
+  return vec;
+}
+
 double get_polar_radius(const std::pair<double, double>& point) {
   return std::sqrt(point.first * point.first + point.second * point.second);
 }

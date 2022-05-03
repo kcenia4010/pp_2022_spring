@@ -100,6 +100,12 @@ TEST(graham_scan_seq, custom_set) {
   ASSERT_EQ(res, check);
 }
 
-/*TEST(graham_scan_seq, test_size_0) {
+TEST(graham_scan_seq, random_set) {
+  std::size_t size = 30;
+  std::vector < std::pair<double, double>> points;
+  points = gen_random_points(size);
+  std::vector<std::pair<double, double>> check;
+  check = graham_conv_hull(points);
 
-}*/
+  ASSERT_EQ(check, check);
+}

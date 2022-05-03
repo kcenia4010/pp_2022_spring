@@ -4,8 +4,12 @@
 
 #include <utility>
 #include <vector>
+#include <random>
+#include <cstdlib>
+#include <ctime>
 
 std::vector<std::pair<double, double>> gen_points(std::size_t size);
+std::vector<std::pair<double, double>> gen_random_points(std::size_t size);
 
 double get_polar_radius(const std::pair<double, double>& point);
 double get_polar_grad(const std::pair<double, double>& point);
