@@ -53,7 +53,7 @@ TEST(DIJKSTRA_OMP, TEST_4) {
   }
 }
 
-int V = 10000;
+int V = 10;
 
 TEST(DIJKSTRA_OMP, TEST_TIME) {
   Graph graph = getRandomGraph(V);

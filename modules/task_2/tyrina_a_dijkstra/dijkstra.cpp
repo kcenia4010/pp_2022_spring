@@ -82,6 +82,8 @@ VectorInt dijkstra_parallel(const Graph& graph, int src, int V) {
         u = local_ind;
       }
 
+#pragma omp barrier
+
 #pragma omp single
       { visited[u] = true; }
 
@@ -112,7 +114,7 @@ Graph parallelDijkstra(const Graph& graph, int V) {
 
 #pragma omp parallel for
   for (int src = 0; src < V; ++src) {
-    result[src] = dijkstra(graph, src, V);
+    result[src] = dijkstra_parallel(graph, src, V);
   }
 
   return result;
