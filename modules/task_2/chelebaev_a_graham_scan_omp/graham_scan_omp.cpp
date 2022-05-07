@@ -2,6 +2,7 @@
 #include "../../../modules/task_2/chelebaev_a_graham_scan_omp/graham_scan_omp.h"
 #include <omp.h>
 #include <stack>
+#include <algorithm>
 
 std::vector<std::pair<double, double>> gen_random_points(std::size_t size) {
   std::mt19937 rand_r(time(0));
