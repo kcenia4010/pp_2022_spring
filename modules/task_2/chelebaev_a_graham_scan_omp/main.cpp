@@ -22,18 +22,18 @@ TEST(graham_scan_omp, fixed_set_1) {
   result[14] = std::make_pair(7, 1);
   result[15] = std::make_pair(5, 3);
 
-   auto res = omp_graham_conv_hull(result.begin(), result.end(), 4);
+  auto res = omp_graham_conv_hull(result.begin(), result.end(), 4);
 
-   std::vector<std::pair<double, double>> check(res.size());
-   check[6] = std::make_pair(2, 6);
-   check[5] = std::make_pair(5, 5);
-   check[4] = std::make_pair(8, 3);
-   check[3] = std::make_pair(7, -2);
-   check[2] = std::make_pair(6, -4);
-   check[1] = std::make_pair(1, -3);
-   check[0] = std::make_pair(0, 0);
+  std::vector<std::pair<double, double>> check(res.size());
+  check[6] = std::make_pair(2, 6);
+  check[5] = std::make_pair(5, 5);
+  check[4] = std::make_pair(8, 3);
+  check[3] = std::make_pair(7, -2);
+  check[2] = std::make_pair(6, -4);
+  check[1] = std::make_pair(1, -3);
+  check[0] = std::make_pair(0, 0);
 
-   ASSERT_EQ(res, check);
+  ASSERT_EQ(res, check);
 }
 
 TEST(graham_scan_omp, fixed_set_2) {
@@ -107,10 +107,9 @@ TEST(graham_scan_omp, rand_points) {
   auto res_std = graham_conv_hull(area.begin(), area.end());
 
   ASSERT_EQ(res_omp, res_std);
-
 }
 
 int main(int argc, char** argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
 }

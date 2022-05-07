@@ -1,8 +1,10 @@
 // Copyright 2022 Chelebaev Artem
 #include "../../../modules/task_2/chelebaev_a_graham_scan_omp/graham_scan_omp.h"
+
 #include <omp.h>
-#include <stack>
+
 #include <algorithm>
+#include <stack>
 
 std::vector<std::pair<double, double>> gen_random_points(std::size_t size) {
   std::mt19937 rand_r(time(0));
@@ -59,7 +61,7 @@ std::vector<std::pair<double, double>> graham_conv_hull(
     std::vector<std::pair<double, double>>::iterator end) {
   std::vector<std::pair<double, double>> points(end - begin);
   std::copy(begin, end, points.begin());
-  
+
   std::size_t min_idx = get_lex_min(points);
   std::swap(points[0], points[min_idx]);
   auto lex_min = points[0];
@@ -126,8 +128,8 @@ std::vector<std::pair<double, double>> omp_graham_conv_hull(
     if (t_number == n_threads - 1) {
       local_scan = graham_conv_hull(begin + step * t_number, end);
     } else {
-      local_scan =
-          graham_conv_hull(begin + step * t_number, begin + step * (t_number + 1));
+      local_scan = graham_conv_hull(begin + step * t_number,
+                                    begin + step * (t_number + 1));
     }
 #pragma omp critical
     {
