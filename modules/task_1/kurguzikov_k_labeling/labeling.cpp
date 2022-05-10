@@ -93,7 +93,7 @@ inline std::vector<uint32_t> renumberComponents(std::vector<uint32_t> image, int
     }
     for (int i = 0; i < size; ++i) {
         if (image[i] != 0) {
-            image[i] = result[std::distance(source.begin(), std::find(source.begin(), source.end(), image[i])];
+            image[i] = result[std::distance(source.begin(), std::find(source.begin(), source.end(), image[i]];
         }
     }
     return image;
