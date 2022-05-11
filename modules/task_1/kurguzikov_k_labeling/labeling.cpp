@@ -3,8 +3,10 @@
 #include <iostream>
 #include <random>
 #include <ctime>
-#include "labeling.h"
+#include "../../../modules/task_1/kurguzikov_k_labeling/labeling.h"
 #include <vector>
+#include <algorithm>
+
 
 std::vector<uint32_t> getRandomBinaryImage(int height, int width) {
     if (height < 1 || width < 1) {
