@@ -3,9 +3,9 @@
 #define MODULES_TASK_3_KRAEV_N_RADIX_SORT_WITH_EVEN_ODD_MERGE_RADIX_SORT_WITH_EVEN_ODD_MERGE_TBB_H_
 
 #include <tbb/tbb.h>
+#include <omp.h>
 #include <vector>
 #include <random>
-#include <omp.h>
 
 std::vector<double> getRandomVector(int size);
 void radixSort(std::vector<double>* vec);
