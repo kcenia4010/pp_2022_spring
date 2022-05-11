@@ -28,7 +28,6 @@ inline std::vector<uint32_t> markComponentsBlock(std::vector<uint32_t> image, in
         int elemBColumn = 0;
         int elemCRow = 0;
         uint32_t A, B, C;
-    
         for (int row = 0; row < height; ++row) {
             for (int column = 0; column < width; ++column) {
                 elemCRow = column - 1;
