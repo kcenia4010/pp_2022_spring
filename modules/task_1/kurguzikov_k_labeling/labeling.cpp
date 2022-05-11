@@ -3,7 +3,7 @@
 #include <iostream>
 #include <random>
 #include <ctime>
-#include "../../../modules/task_1/kurguzikov_k_labeling/labeling.h"
+#include "labeling.h"
 #include <vector>
 
 std::vector<uint32_t> getRandomBinaryImage(int height, int width) {
@@ -84,16 +84,15 @@ inline std::vector<uint32_t> renumberComponents(std::vector<uint32_t> image, int
     int size = height * width;
 
     for (int i = 0; i < size; ++i) {
-        if (image[i] != 0 && std::find(source.begin(), source.end(), image[i] == source.end()))
-        {
+        if (image[i] != 0
+            && std::find(source.begin(), source.end(), image[i]) == source.end()) {
             source.push_back(image[i]);
             ++count;
             result.push_back(count);
         }
     }
     for (int i = 0; i < size; ++i) {
-        if (image[i] != 0)
-        {
+        if (image[i] != 0) {
             image[i] = result[std::distance(source.begin(), std::find(source.begin(), source.end(), image[i]))];
         }
     }
