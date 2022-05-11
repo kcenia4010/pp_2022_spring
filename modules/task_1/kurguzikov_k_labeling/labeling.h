@@ -3,7 +3,7 @@
 #define MODULES_TASK_1_KURGUZIKOV_K_LABELING_LABELING_H_
 
 #include <vector>
-#include <omp.h>
+
 
 std::vector<uint32_t> getRandomBinaryImage(int height, int width);
 inline std::vector<uint32_t> markComponentsBlock(

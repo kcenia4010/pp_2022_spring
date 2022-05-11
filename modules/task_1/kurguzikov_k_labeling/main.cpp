@@ -1,4 +1,4 @@
-﻿// Copyright 2022 Kurguzikov Kirill
+﻿//  Copyright 2022 Kurguzikov Kirill
 
 #include <gtest/gtest.h>
 #include <vector>
@@ -25,7 +25,6 @@ TEST(Sequential_Operations, Test_Size_1x1) {
     image = getRandomBinaryImage(height, width);
     ASSERT_NO_THROW(std::vector<uint32_t> resultImageNotParall =
         markComponentsNotParall(image, height, width));
-
 }
 
 TEST(Sequential_Operations, Test) {
@@ -57,7 +56,6 @@ TEST(Sequential_Operations, Test_Size_10x10) {
     image = getRandomBinaryImage(height, width);
     ASSERT_NO_THROW(std::vector<uint32_t> resultImageNotParall = 
         markComponentsNotParall(image, height, width));
-
 }
 
 TEST(Sequential_Operations, Test_Size_15x15) {
@@ -67,8 +65,7 @@ TEST(Sequential_Operations, Test_Size_15x15) {
     std::vector<uint32_t> image;
     image = getRandomBinaryImage(height, width);
     ASSERT_NO_THROW(std::vector<uint32_t> resultImageNotParall = 
-        markComponentsNotParall(image, height, width););
-
+        markComponentsNotParall(image, height, width));
 }
 
 TEST(Sequential_Operations, Test_Size_20x20) {
@@ -78,8 +75,7 @@ TEST(Sequential_Operations, Test_Size_20x20) {
     std::vector<uint32_t> image;
     image = getRandomBinaryImage(height, width);
     ASSERT_NO_THROW(std::vector<uint32_t> resultImageNotParall = 
-        markComponentsNotParall(image, height, width););
-
+        markComponentsNotParall(image, height, width));
 }
 
 TEST(Sequential_Operations, Test_Size_25x25) {
@@ -89,8 +85,7 @@ TEST(Sequential_Operations, Test_Size_25x25) {
     std::vector<uint32_t> image;
     image = getRandomBinaryImage(height, width);
     ASSERT_NO_THROW(std::vector<uint32_t> resultImageNotParall = 
-        markComponentsNotParall(image, height, width););
-
+        markComponentsNotParall(image, height, width));
 }
 
 TEST(Sequential_Operations, Test_Size_50x50) {
@@ -100,8 +95,7 @@ TEST(Sequential_Operations, Test_Size_50x50) {
     std::vector<uint32_t> image;
     image = getRandomBinaryImage(height, width);
     ASSERT_NO_THROW(std::vector<uint32_t> resultImageNotParall = 
-        markComponentsNotParall(image, height, width););
-
+        markComponentsNotParall(image, height, width));
 }
 
 TEST(Sequential_Operations, Test_Size_100x100) {
@@ -111,8 +105,7 @@ TEST(Sequential_Operations, Test_Size_100x100) {
     std::vector<uint32_t> image;
     image = getRandomBinaryImage(height, width);
     ASSERT_NO_THROW(std::vector<uint32_t> resultImageNotParall = 
-        markComponentsNotParall(image, height, width););
-
+        markComponentsNotParall(image, height, width));
 }
 
 
@@ -120,4 +113,4 @@ TEST(Sequential_Operations, Test_Size_100x100) {
 int main(int argc, char** argv) {
         ::testing::InitGoogleTest(&argc, argv);
         return RUN_ALL_TESTS();
-    }
+}

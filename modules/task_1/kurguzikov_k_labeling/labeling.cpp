@@ -3,9 +3,10 @@
 #include <iostream>
 #include <random>
 #include <ctime>
-#include "../../../modules/task_1/kurguzikov_k_labeling/labeling.h"
 #include <vector>
 #include <algorithm>
+#include "../../../modules/task_1/kurguzikov_k_labeling/labeling.h"
+
 
 
 std::vector<uint32_t> getRandomBinaryImage(int height, int width) {
@@ -34,36 +35,29 @@ inline std::vector<uint32_t> markComponentsBlock(std::vector<uint32_t> image, in
                 if (elemCRow < 0) {
                     elemCRow = 0;
                     B = 0;
-                }
-                else {
+                } else {
                     B = image[row * width + elemCRow];
                 }
                 elemBColumn = row - 1;
                 if (elemBColumn < 0) {
                     elemBColumn = 0;
                     C = 0;
-                }
-                else {
+                } else {
                     C = image[elemBColumn * width + column];
                 }
                 A = image[row * width + column];
                 if (A == 0) {
-                }
-                else if (B == 0 && C == 0) {
+                } else if (B == 0 && C == 0) {
                     ++curr;
                     image[row * width + column] = curr;
-                }
-                else if (B != 0 && C == 0) {
+                } else if (B != 0 && C == 0) {
                     image[row * width + column] = B;
-                }
-                else if (B == 0 && C != 0) {
+                } else if (B == 0 && C != 0) {
                     image[row * width + column] = C;
-                }
-                else if (B != 0 && C != 0) {
+                } else if (B != 0 && C != 0) {
                     if (B == C) {
                         image[row * width + column] = B;
-                    }
-                    else {
+                    } else {
                         image[row * width + column] = B;
                         for (int i = 0; i < height; ++i) {
                             for (int j = 0; j < width; ++j) {
@@ -107,8 +101,7 @@ inline std::vector<uint32_t> rotateImage(std::vector<uint32_t> image, int height
                 rotatedImage[j * height + height - 1 - i] = image[i * width + j];
             }
         }
-    }
-    else {
+    } else {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 rotatedImage[(width - j - 1) * height + i] = image[i * width + j];
