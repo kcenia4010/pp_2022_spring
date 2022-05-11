@@ -23,8 +23,8 @@ TEST(Sequential_Operations, Test_Size_1x1) {
 
     std::vector<uint32_t> image;
     image = getRandomBinaryImage(height, width);
-        std::vector<uint32_t> resultImageNotParall = markComponentsNotParall(image, height, width);
-        ASSERT_NO_THROW(resultImageNotParall);
+    ASSERT_NO_THROW(std::vector<uint32_t> resultImageNotParall =
+        markComponentsNotParall(image, height, width));
 
 }
 
@@ -55,8 +55,8 @@ TEST(Sequential_Operations, Test_Size_10x10) {
 
     std::vector<uint32_t> image;
     image = getRandomBinaryImage(height, width);
-    std::vector<uint32_t> resultImageNotParall = markComponentsNotParall(image, height, width);
-    ASSERT_NO_THROW(resultImageNotParall);
+    ASSERT_NO_THROW(std::vector<uint32_t> resultImageNotParall = 
+        markComponentsNotParall(image, height, width));
 
 }
 
@@ -66,8 +66,8 @@ TEST(Sequential_Operations, Test_Size_15x15) {
 
     std::vector<uint32_t> image;
     image = getRandomBinaryImage(height, width);
-    std::vector<uint32_t> resultImageNotParall = markComponentsNotParall(image, height, width);
-    ASSERT_NO_THROW(resultImageNotParall);
+    ASSERT_NO_THROW(std::vector<uint32_t> resultImageNotParall = 
+        markComponentsNotParall(image, height, width););
 
 }
 
@@ -77,8 +77,8 @@ TEST(Sequential_Operations, Test_Size_20x20) {
 
     std::vector<uint32_t> image;
     image = getRandomBinaryImage(height, width);
-    std::vector<uint32_t> resultImageNotParall = markComponentsNotParall(image, height, width);
-    ASSERT_NO_THROW(resultImageNotParall);
+    ASSERT_NO_THROW(std::vector<uint32_t> resultImageNotParall = 
+        markComponentsNotParall(image, height, width););
 
 }
 
@@ -88,8 +88,8 @@ TEST(Sequential_Operations, Test_Size_25x25) {
 
     std::vector<uint32_t> image;
     image = getRandomBinaryImage(height, width);
-    std::vector<uint32_t> resultImageNotParall = markComponentsNotParall(image, height, width);
-    ASSERT_NO_THROW(resultImageNotParall);
+    ASSERT_NO_THROW(std::vector<uint32_t> resultImageNotParall = 
+        markComponentsNotParall(image, height, width););
 
 }
 
@@ -99,8 +99,8 @@ TEST(Sequential_Operations, Test_Size_50x50) {
 
     std::vector<uint32_t> image;
     image = getRandomBinaryImage(height, width);
-    std::vector<uint32_t> resultImageNotParall = markComponentsNotParall(image, height, width);
-    ASSERT_NO_THROW(resultImageNotParall);
+    ASSERT_NO_THROW(std::vector<uint32_t> resultImageNotParall = 
+        markComponentsNotParall(image, height, width););
 
 }
 
@@ -110,8 +110,8 @@ TEST(Sequential_Operations, Test_Size_100x100) {
 
     std::vector<uint32_t> image;
     image = getRandomBinaryImage(height, width);
-    std::vector<uint32_t> resultImageNotParall = markComponentsNotParall(image, height, width);
-    ASSERT_NO_THROW(resultImageNotParall);
+    ASSERT_NO_THROW(std::vector<uint32_t> resultImageNotParall = 
+        markComponentsNotParall(image, height, width););
 
 }
 
