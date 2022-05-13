@@ -4,7 +4,7 @@
 #include <random>
 #include <iostream>
 
-#include "../../../modules/task_1/kolosova_a_mult_complex_ccs_matrix/ccs_complex_mult.h"
+#include "../../../modules/task_2/kolosova_a_mult_complex_ccs_matrix/ccs_complex_mult.h"
 
 std::vector<std::vector<std::complex<double>>> generate_matrix(int r, int c,
     double density) {
@@ -19,6 +19,7 @@ std::vector<std::vector<std::complex<double>>> generate_matrix(int r, int c,
     std::uniform_real_distribution<double> val{ 0.0, 100.0 };
     std::vector<std::vector<std::complex<double>>> matrix(r);
 
+#pragma omp parallel for
     for (int i = 0; i < r; ++i) {
         matrix[i].resize(c);
         for (int j = 0; j < c; ++j) {
@@ -28,26 +29,6 @@ std::vector<std::vector<std::complex<double>>> generate_matrix(int r, int c,
         }
     }
     return matrix;
-}
-
-std::vector<std::vector<std::complex<double>>> multiply_v(
-    const std::vector<std::vector<std::complex<double>>>& A,
-    const std::vector<std::vector<std::complex<double>>>& B) {
-    if (A.size() == 0 || B.size() == 0)
-        throw("Empty matrices, cannot multiply");
-    if (A[0].size() != B.size())
-        throw("Incompatible matrices size for multiplication");
-
-    std::vector<std::vector<std::complex<double>>> C(B.size());
-    for (int i = 0; i < static_cast<int>(C.size()); i++) {
-        C[i] = std::vector<std::complex<double>>(A[0].size(), {0.0, 0.0});
-    }
-
-    for (int i = 0; i < static_cast<int>(A.size()); i++)
-        for (int j = 0; j < static_cast<int>(B[0].size()); j++)
-            for (int k = 0; k < static_cast<int>(B.size()); k++)
-                C[i][j] += A[i][k] * B[k][j];
-    return C;
 }
 
 CCS_matrix::CCS_matrix(std::vector<std::vector<std::complex<double>>> m) {
@@ -71,15 +52,40 @@ CCS_matrix transpose(const CCS_matrix& A) {
     CCS_matrix res(A.col_n, A.row_n);
     std::vector<std::vector<std::complex<double>>> tmpVals(res.col_n);  // vector of new values by columns
     std::vector<std::vector<int>> tmpRows(res.col_n);  // vector of new row indexes
-    int tmpCol = 0;  // column of current element (in old matrix)
 
-    for (int i = 0; i < static_cast<int>(A.val.size()); i++) {
-        while (i >= A.column_pointer[tmpCol + 1]) tmpCol++;
-        tmpVals[A.rows[i]].push_back(A.val[i]);
-        tmpRows[A.rows[i]].push_back(tmpCol);
+    for (int i = 0; i < A.col_n; i++) {
+        for (int j = A.column_pointer[i]; j < A.column_pointer[i + 1]; j++) {
+            tmpVals[A.rows[j]].push_back(A.val[j]);
+            tmpRows[A.rows[j]].push_back(i);
+        }
     }
 
-    tmpCol = 0;
+    int tmpCol = 0;
+    for (int i = 0; i < static_cast<int>(tmpVals.size()); i++) {
+        res.column_pointer.push_back(tmpCol);
+        res.val.insert(res.val.end(), tmpVals[i].begin(), tmpVals[i].end());
+        res.rows.insert(res.rows.end(), tmpRows[i].begin(), tmpRows[i].end());
+        tmpCol += tmpVals[i].size();
+    }
+    res.column_pointer.push_back(tmpCol);
+    return res;
+}
+
+CCS_matrix transpose_omp(const CCS_matrix& A) {
+    CCS_matrix res(A.col_n, A.row_n);
+    std::vector<std::vector<std::complex<double>>> tmpVals(res.col_n);  // vector of new values by columns
+    std::vector<std::vector<int>> tmpRows(res.col_n);  // vector of new row indexes
+
+    int numThread;
+    for (int i = 0; i < A.col_n; i++) {
+#pragma omp parallel for
+        for (int j = A.column_pointer[i]; j < A.column_pointer[i + 1]; j++) {
+            tmpVals[A.rows[j]].push_back(A.val[j]);
+            tmpRows[A.rows[j]].push_back(i);
+        }
+    }
+
+    int tmpCol = 0;
     for (int i = 0; i < static_cast<int>(tmpVals.size()); i++) {
         res.column_pointer.push_back(tmpCol);
         res.val.insert(res.val.end(), tmpVals[i].begin(), tmpVals[i].end());
@@ -114,11 +120,36 @@ CCS_matrix multiply(const CCS_matrix& A, const CCS_matrix& B) {
     return res;
 }
 
+CCS_matrix multiply_omp(const CCS_matrix& A, const CCS_matrix& B) {
+    if (A.col_n != B.row_n)
+        throw("Incompatible matrices size for multiplication");
+    CCS_matrix At = transpose_omp(A);
+
+    std::vector<std::vector<std::complex<double>>> C(A.row_n);
+    for (int i = 0; i < static_cast<int>(C.size()); i++) {
+        C[i] = std::vector<std::complex<double>>(B.col_n, { 0.0, 0.0 });
+    }
+
+#pragma omp parallel for
+    for (int i = 0; i < A.row_n; i++) {
+        if (At.column_pointer[i] == At.column_pointer[i + 1]) continue;
+        for (int j = 0; j < B.col_n; j++) {
+            if (B.column_pointer[j] == B.column_pointer[j + 1]) continue;
+            C[i][j] = scalar_mult(At.val, At.rows, At.column_pointer[i],
+                At.column_pointer[i + 1],
+                B.val, B.rows, B.column_pointer[j], B.column_pointer[j + 1]);
+        }
+    }
+
+    CCS_matrix res(C);
+    return res;
+}
+
 std::complex<double> scalar_mult(const std::vector<std::complex<double>>& v1,
     const std::vector<int>& pos1, int start1, int end1,
     const std::vector<std::complex<double>>& v2, const std::vector<int>& pos2,
     int start2, int end2) {
-    std::complex<double> res = {0, 0};
+    std::complex<double> res = { 0, 0 };
     for (int i = start1, j = start2; i < end1 && j < end2;) {
         if (pos1[i] == pos2[j]) {
             res += v1[i] * v2[j];
