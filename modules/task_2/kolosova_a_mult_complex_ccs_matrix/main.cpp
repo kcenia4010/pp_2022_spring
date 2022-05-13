@@ -28,9 +28,6 @@ TEST(CCSComplexMatrix, can_convert_matrix_to_CCS) {
 }
 
 TEST(CCSComplexMatrix, can_transpose_matrix) {
-    double t1, t2, dt;
-    t1 = omp_get_wtime();
-
     std::vector<std::complex<double>> v1{ {0.0, 0.0}, {3.0, 0.0}, {0.0, 0.0}, {0.0, 7.0}, {0.0, 0.0} };
     std::vector<std::complex<double>> v2{ {0.0, 0.0}, {0.0, 0.0}, {8.0, 0.0}, {0.0, 0.0}, {0.0, 0.0} };
     std::vector<std::complex<double>> v3{ {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0}, {0.0, 0.0} };
@@ -46,12 +43,7 @@ TEST(CCSComplexMatrix, can_transpose_matrix) {
     std::vector<std::vector<std::complex<double>>> m02{ v11, v12, v13, v14, v15 };
     CCS_matrix m2(m02);
 
-    std::cerr << m2 << std::endl;
-
     CCS_matrix m2t = transpose(m2);
-
-    t2 = omp_get_wtime();
-    dt = t2 - t1;
 
     EXPECT_EQ(m1, m2t);
 }
@@ -68,6 +60,7 @@ TEST(CCSComplexMatrix, can_transpose_matrix_omp) {
     m2.column_pointer = { 0, 2, 3, 3, 7 };
 
     CCS_matrix m2t = transpose_omp(m2);
+
     EXPECT_EQ(m1, m2t);
 }
 

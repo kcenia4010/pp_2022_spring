@@ -76,7 +76,6 @@ CCS_matrix transpose_omp(const CCS_matrix& A) {
     std::vector<std::vector<std::complex<double>>> tmpVals(res.col_n);  // vector of new values by columns
     std::vector<std::vector<int>> tmpRows(res.col_n);  // vector of new row indexes
 
-    int numThread;
     for (int i = 0; i < A.col_n; i++) {
 #pragma omp parallel for
         for (int j = A.column_pointer[i]; j < A.column_pointer[i + 1]; j++) {
