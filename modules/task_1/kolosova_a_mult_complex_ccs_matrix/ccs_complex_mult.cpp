@@ -10,7 +10,7 @@
 std::vector<std::vector<std::complex<double>>> generate_matrix(int r, int c,
     double density) {
     if (r <= 0 || c <= 0) {
-        throw ("Incorrect matrix size for generation");
+        throw("Incorrect matrix size for generation");
     }
     if (density < 0 || density>1) density = 0.5;
 
@@ -40,7 +40,7 @@ std::vector<std::vector<std::complex<double>>> multiply_v(
         throw("Incompatible matrices size for multiplication");
 
     std::vector<std::vector<std::complex<double>>> C(B.size());
-    for (int i = 0; i < C.size();i++) {
+    for (int i = 0; i < C.size(); i++) {
         C[i] = std::vector<std::complex<double>>(A[0].size(), {0.0, 0.0});
     }
 
@@ -51,7 +51,7 @@ std::vector<std::vector<std::complex<double>>> multiply_v(
     return C;
 }
 
-CCS_matrix::CCS_matrix(std::vector<std::vector<std::complex<double>>> m){
+CCS_matrix::CCS_matrix(std::vector<std::vector<std::complex<double>>> m) {
     row_n = m.size();
     col_n = (row_n) ? m[0].size() : 0;
     int ptr = 0;
@@ -68,7 +68,7 @@ CCS_matrix::CCS_matrix(std::vector<std::vector<std::complex<double>>> m){
     column_pointer.push_back(ptr);
 }
 
-CCS_matrix transpose(const CCS_matrix& A){
+CCS_matrix transpose(const CCS_matrix& A) {
     CCS_matrix res(A.col_n, A.row_n);
     std::vector<std::vector<std::complex<double>>> tmpVals(res.col_n);  // vector of new values by columns
     std::vector<std::vector<int>> tmpRows(res.col_n);  // vector of new row indexes
@@ -91,7 +91,7 @@ CCS_matrix transpose(const CCS_matrix& A){
     return res;
 }
 
-CCS_matrix multiply(const CCS_matrix& A, const CCS_matrix& B){
+CCS_matrix multiply(const CCS_matrix& A, const CCS_matrix& B) {
     if (A.col_n != B.row_n)
         throw("Incompatible matrices size for multiplication");
     CCS_matrix At = transpose(A);
@@ -118,18 +118,18 @@ CCS_matrix multiply(const CCS_matrix& A, const CCS_matrix& B){
 std::complex<double> scalar_mult(const std::vector<std::complex<double>>& v1,
     const std::vector<int>& pos1, int start1, int end1,
     const std::vector<std::complex<double>>& v2, const std::vector<int>& pos2,
-    int start2, int end2){
+    int start2, int end2) {
     std::complex<double> res = 0.0;
     for (int i = start1, j = start2; i < end1 && j < end2;) {
         if (pos1[i] == pos2[j]) {
             res += v1[i] * v2[j];
             i++;
             j++;
-        }
-        else
+        } else {
             if (pos1[i] < pos2[j]) i++;
             else
                 j++;
+        }
     }
     return res;
 }

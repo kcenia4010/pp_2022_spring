@@ -1,7 +1,7 @@
 // Copyright 2022 Kolosova Alena
 
-#ifndef MODULES_TASK_1_KOLOSOVA_A_MULT_CCS_COMPLEX_MATRIX_MULT_CCS_COMPLEX_MATRIX_
-#define MODULES_TASK_1_KOLOSOVA_A_MULT_CCS_COMPLEX_MATRIX_MULT_CCS_COMPLEX_MATRIX_
+#ifndef MODULES_TASK_1_KOLOSOVA_A_MULT_COMPLEX_CCS_MATRIX_CCS_COMPLEX_MULT_H_
+#define MODULES_TASK_1_KOLOSOVA_A_MULT_COMPLEX_CCS_MATRIX_CCS_COMPLEX_MULT_H_
 
 #include <vector>
 #include <complex>
@@ -34,13 +34,12 @@ struct CCS_matrix {
         return false;
     }
 
-    CCS_matrix(int r=0, int c=0) {
+    explicit CCS_matrix(int r = 0, int c = 0) {
         row_n = r;
         col_n = c;
     }
 
-    CCS_matrix(std::vector<std::vector<std::complex<double>>> m);
-
+    explicit CCS_matrix(std::vector<std::vector<std::complex<double>>> m);
 };
 
 std::vector<std::vector<std::complex<double>>> generate_matrix(int r, int c,
