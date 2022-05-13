@@ -14,8 +14,7 @@ struct CCS_matrix {
     std::vector<int> rows;
     std::vector<int> column_pointer;
 
-    friend std::ostream& operator<<(std::ostream& stream, const CCS_matrix& m)
-    {
+    friend std::ostream& operator<<(std::ostream& stream, const CCS_matrix& m) {
         stream << "matrix rows = " << m.row_n << " cols = " << m.col_n << std::endl << "values: ";
         for (auto elem : m.val)
             stream << elem << ' ';
@@ -29,15 +28,13 @@ struct CCS_matrix {
         return stream;
     }
 
-    bool operator==(const CCS_matrix& m) const
-    {
+    bool operator==(const CCS_matrix& m) const {
         if (m.row_n == row_n && m.col_n == col_n && m.val == val &&
             m.rows == rows && m.column_pointer == column_pointer) return true;
         return false;
     }
 
-    CCS_matrix(int r=0, int c=0)
-    {
+    CCS_matrix(int r=0, int c=0) {
         row_n = r;
         col_n = c;
     }
@@ -60,4 +57,4 @@ std::complex<double> scalar_mult(const std::vector<std::complex<double>>& v1,
     const std::vector<std::complex<double>>& v2, const std::vector<int>& pos2,
     int start2, int end2);
 
-#endif  // MODULES_TASK_1_KOLOSOVA_A_MULT_CCS_COMPLEX_MATRIX_MULT_CCS_COMPLEX_MATRIX_
+#endif  // MODULES_TASK_1_KOLOSOVA_A_MULT_COMPLEX_CCS_MATRIX_CCS_COMPLEX_MULT_H_
