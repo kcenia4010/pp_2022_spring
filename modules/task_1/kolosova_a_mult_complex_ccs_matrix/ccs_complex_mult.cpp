@@ -40,13 +40,13 @@ std::vector<std::vector<std::complex<double>>> multiply_v(
         throw("Incompatible matrices size for multiplication");
 
     std::vector<std::vector<std::complex<double>>> C(B.size());
-    for (int i = 0; i < C.size(); i++) {
+    for (int i = 0; i < (int)C.size(); i++) {
         C[i] = std::vector<std::complex<double>>(A[0].size(), {0.0, 0.0});
     }
 
-    for (int i = 0; i < A.size(); i++)
-        for (int j = 0; j < B[0].size(); j++)
-            for (int k = 0; k < B.size(); k++)
+    for (int i = 0; i < (int)A.size(); i++)
+        for (int j = 0; j < (int)B[0].size(); j++)
+            for (int k = 0; k < (int)B.size(); k++)
                 C[i][j] += A[i][k] * B[k][j];
     return C;
 }
@@ -55,9 +55,9 @@ CCS_matrix::CCS_matrix(std::vector<std::vector<std::complex<double>>> m) {
     row_n = m.size();
     col_n = (row_n) ? m[0].size() : 0;
     int ptr = 0;
-    for (int j = 0; j < m[0].size(); j++) {
+    for (int j = 0; j < (int)m[0].size(); j++) {
         column_pointer.push_back(ptr);
-        for (int i = 0; i < m.size(); i++) {
+        for (int i = 0; i < (int)m.size(); i++) {
             if (m[i][j].real() || m[i][j].imag()) {
                 val.push_back(m[i][j]);
                 rows.push_back(i);
@@ -74,14 +74,14 @@ CCS_matrix transpose(const CCS_matrix& A) {
     std::vector<std::vector<int>> tmpRows(res.col_n);  // vector of new row indexes
     int tmpCol = 0;  // column of current element (in old matrix)
 
-    for (int i = 0; i < A.val.size(); i++) {
+    for (int i = 0; i < (int)A.val.size(); i++) {
         while (i >= A.column_pointer[tmpCol + 1]) tmpCol++;
         tmpVals[A.rows[i]].push_back(A.val[i]);
         tmpRows[A.rows[i]].push_back(tmpCol);
     }
 
     tmpCol = 0;
-    for (int i = 0; i < tmpVals.size(); i++) {
+    for (int i = 0; i < (int)tmpVals.size(); i++) {
         res.column_pointer.push_back(tmpCol);
         res.val.insert(res.val.end(), tmpVals[i].begin(), tmpVals[i].end());
         res.rows.insert(res.rows.end(), tmpRows[i].begin(), tmpRows[i].end());
@@ -97,7 +97,7 @@ CCS_matrix multiply(const CCS_matrix& A, const CCS_matrix& B) {
     CCS_matrix At = transpose(A);
 
     std::vector<std::vector<std::complex<double>>> C(A.row_n);
-    for (int i = 0; i < C.size(); i++) {
+    for (int i = 0; i < (int)C.size(); i++) {
         C[i] = std::vector<std::complex<double>>(B.col_n, {0.0, 0.0});
     }
 
