@@ -85,8 +85,7 @@ void evenOrOddSplitter(std::vector<double>* vec_1, std::vector<double>* vec_2,
         if ((*vec_1)[a] < (*vec_2)[b]) {
             tmp.push_back((*vec_1)[a]);
             a += 2;
-        }
-        else {
+        } else {
             tmp.push_back((*vec_2)[b]);
             b += 2;
         }
@@ -96,8 +95,7 @@ void evenOrOddSplitter(std::vector<double>* vec_1, std::vector<double>* vec_2,
         for (size_t j = b; j < size_2; j += 2) {
             tmp.push_back((*vec_2)[j]);
         }
-    }
-    else {
+    } else {
         for (size_t j = a; j < size_1; j += 2) {
             tmp.push_back((*vec_1)[j]);
         }
