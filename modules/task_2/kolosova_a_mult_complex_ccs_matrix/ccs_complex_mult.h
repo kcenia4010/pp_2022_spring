@@ -3,11 +3,10 @@
 #ifndef MODULES_TASK_2_KOLOSOVA_A_MULT_COMPLEX_CCS_MATRIX_CCS_COMPLEX_MULT_H_
 #define MODULES_TASK_2_KOLOSOVA_A_MULT_COMPLEX_CCS_MATRIX_CCS_COMPLEX_MULT_H_
 
+#include <omp.h>
 #include <vector>
 #include <complex>
 #include <iostream>
-
-#include <omp.h>
 
 struct CCS_matrix {
     int row_n;

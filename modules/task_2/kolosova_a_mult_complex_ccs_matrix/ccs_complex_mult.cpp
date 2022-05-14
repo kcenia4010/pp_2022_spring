@@ -138,19 +138,23 @@ CCS_matrix multiply_omp(const CCS_matrix& A, const CCS_matrix& B) {
     std::vector<std::vector<int>> tmpRows(B.col_n);
 
 #pragma omp parallel for
-	for (int j = 0; j < B.col_n; j++) {
-		if (B.column_pointer[j] == B.column_pointer[j + 1]) continue;
+    for (int j = 0; j < B.col_n; j++) {
+        if (B.column_pointer[j] == B.column_pointer[j + 1]) {
+            continue;
+        }
         for (int i = 0; i < A.row_n; i++) {
-			if (At.column_pointer[i] == At.column_pointer[i + 1]) continue;
+            if (At.column_pointer[i] == At.column_pointer[i + 1]) {
+                continue;
+            }
             std::complex<double> v = scalar_mult(At.val, At.rows, At.column_pointer[i],
-				At.column_pointer[i + 1],
-				B.val, B.rows, B.column_pointer[j], B.column_pointer[j + 1]);
+                At.column_pointer[i + 1],
+                B.val, B.rows, B.column_pointer[j], B.column_pointer[j + 1]);
             if (v != 0.0) {
                 tmpVals[j].push_back(v);
                 tmpRows[j].push_back(i);
             }
-		}
-	}
+        }
+    }
 
     CCS_matrix res(A.row_n, B.col_n);
     int tmpCol = 0;
