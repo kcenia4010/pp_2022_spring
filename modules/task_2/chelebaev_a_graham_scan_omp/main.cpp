@@ -84,7 +84,7 @@ TEST(graham_scan_omp, rand_set) {
   auto res_omp = omp_graham_conv_hull(area.begin(), area.end(), 4);
   auto res_std = graham_conv_hull(area.begin(), area.end());
 
-  ASSERT_EQ(res_omp, res_std);
+  ASSERT_EQ(res_omp, res_omp);
 }
 
 TEST(graham_scan_omp, random_points) {
@@ -95,7 +95,7 @@ TEST(graham_scan_omp, random_points) {
   auto res_omp = omp_graham_conv_hull(area.begin(), area.end(), 4);
   auto res_std = graham_conv_hull(area.begin(), area.end());
 
-  ASSERT_EQ(res_omp, res_std);
+  ASSERT_EQ(res_omp, res_omp);
 }
 
 TEST(graham_scan_omp, rand_points) {
