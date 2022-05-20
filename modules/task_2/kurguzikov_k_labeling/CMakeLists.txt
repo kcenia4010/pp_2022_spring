@@ -55,4 +55,3 @@ if ( USE_OMP )
 else( USE_OMP )
     message( STATUS "-- ${ProjectId} - NOT BUILD!"  )
 endif( USE_OMP )
- 
