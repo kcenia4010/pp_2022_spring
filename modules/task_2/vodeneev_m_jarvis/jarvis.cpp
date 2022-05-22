@@ -71,10 +71,10 @@ std::vector<std::pair<double, double>> JarvisOmp(std::vector<std::pair
     int current_index = 0;
 
     for (size_t i = 0; i < points.size(); i++) {
-       if (points[i].first < left_point.first) {
-          left_point = points[i];
-          current_index = i;
-       }
+        if (points[i].first < left_point.first) {
+            left_point = points[i];
+            current_index = i;
+        }
     }
 
     std::vector<std::pair<double, double>> hull;
@@ -88,7 +88,7 @@ std::vector<std::pair<double, double>> JarvisOmp(std::vector<std::pair
 
     while (true) {
 #pragma omp parallel num_threads(numthreads)
-{
+        {
             int temp_index = 0;
 
 #pragma omp for
