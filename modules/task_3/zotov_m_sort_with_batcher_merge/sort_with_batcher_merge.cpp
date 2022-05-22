@@ -185,5 +185,5 @@ void parallelRadixSort(std::vector<int>* data, int size, int number_threads) {
         } else {
             number_threads /= 2;
         }
-    }    
+    }
 }
