@@ -53,7 +53,7 @@ TEST(GAUSS_HORIZONTAL_STD, TEST_4) {
 }
 
 TEST(GAUSS_HORIZONTAL_STD, TEST_SEQ_TIME) {
-  const int width = 20, height = 20;
+  const int width = 2000, height = 1000;
   img image = getRandomImage(width, height);
 
   auto time_1 = clock();

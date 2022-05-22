@@ -52,10 +52,9 @@ img getGaussSTD(const img& image, int width, int height) {
   img new_image =
       std::vector<std::vector<int>>(height - 2, std::vector<int>(width - 2, 0));
 
-  const int thread_num = std::thread::hardware_concurrency();
+  const int threads_NUMBER = 4;
 
-  auto thread_func = [width, &new_image, &image](int begin, int end,
-                                                 int index) {
+  auto func = [width, &new_image, &image](int begin, int end, int index) {
     for (int i = begin; i < end; i++) {
       for (int j = 1; j < width - 1; j++) {
         new_image[i - 1][j - 1] = calcNewPixelColor(image, j, i);
@@ -63,20 +62,17 @@ img getGaussSTD(const img& image, int width, int height) {
     }
   };
 
-  std::vector<std::thread> threads(thread_num);
-  int delta = (height - 2) / thread_num;
+  std::vector<std::thread> threads(threads_NUMBER);
+  const int range = (height - 2) / threads_NUMBER;
 
-  for (int thread = 0; thread < thread_num; ++thread) {
-    int begin = delta * thread + 1;
-    int end = delta * (thread + 1) + 1;
+  for (int thread = 0; thread < threads_NUMBER - 1; ++thread) {
+    int begin = range * thread + 1;
+    int end = range * (thread + 1) + 1;
 
-    if (thread != thread_num - 1) {
-      threads[thread] = std::thread(thread_func, begin, end, thread);
-    } else {
-      threads[thread] = std::thread(thread_func, delta * (thread_num - 1) + 1,
-                                    height - 1, thread_num - 1);
-    }
+    threads[thread] = std::thread(func, begin, end, thread);
   }
+  threads[threads_NUMBER - 1] = std::thread(func, range * (threads_NUMBER - 1) + 1,
+                                height - 1, threads_NUMBER - 1);
 
   for (auto&& i : threads) {
     i.join();
