@@ -69,8 +69,7 @@ void splitData(std::vector<int>* data, std::vector<int>* first, int f, int f_dis
         if ((*data)[f] < (*data)[s]) {
             first->push_back((*data)[f]);
             f += 2;
-        }
-        else {
+        } else {
             first->push_back((*data)[s]);
             s += 2;
         }
@@ -80,8 +79,7 @@ void splitData(std::vector<int>* data, std::vector<int>* first, int f, int f_dis
         for (int j = s; j < s_displ; j += 2) {
             first->push_back((*data)[j]);
         }
-    }
-    else if (s >= s_displ) {
+    } else if (s >= s_displ) {
         for (int j = f; j < f_displ; j += 2) {
             first->push_back((*data)[j]);
         }
@@ -130,12 +128,11 @@ void compare(std::vector<int>* data, int size, int offset) {
 }
 
 class Data {
-private:
+ private:
     std::vector<int>* mainData;
     std::vector<int>* localData;
     std::vector<int>* localSize;
-
-public:
+ public:
     Data(std::vector<int>* mainData_, std::vector<int>* localData_, std::vector<int>* localSize_):
         mainData(mainData_), localData(localData_), localSize(localSize_) {}
     void operator()(const tbb::blocked_range<int>& range)const {
@@ -143,17 +140,7 @@ public:
             radixSort(mainData, (*localData)[i], (*localSize)[i]);
         }
     }
-
 };
-/*
-void batcherMerge(std::vector<int>* data, int size, int displ, int tn) {
-    for (int i = 0; i < tn; i++) {
-        if (i % 2 == 0) {
-            evenMerge(data,)
-        }
-    }
-}
-*/
 
 void parallelRadixSort(std::vector<int>* data, int size, int number_threads) {
     int local_size = size / number_threads;
@@ -161,7 +148,6 @@ void parallelRadixSort(std::vector<int>* data, int size, int number_threads) {
     std::vector<int> sendCount(number_threads);
     std::vector<int> displ;
     int iterator;
-    //int ThreadRank;
     int sum = 0;
     for (int i = 0; i < number_threads; i++) {
         sendCount[i] = local_size;
@@ -172,18 +158,12 @@ void parallelRadixSort(std::vector<int>* data, int size, int number_threads) {
         displ.push_back(sum);
         sum += sendCount[i];
     }
-
     iterator = getNumberOfIterations(number_threads);
     tbb::task_scheduler_init init(number_threads);
-
-    tbb::parallel_for(tbb::blocked_range<int>(0, sendCount.size(), 1),
+    tbb::parallel_for(tbb::blocked_range<int>(0, number_threads, 1),
         Data(data, &sendCount, &displ),
         tbb::auto_partitioner());
-    
     init.terminate();
-    
-
-
     for (int j = 0; j < iterator; j++) {
         for (int i = 0; i < number_threads; i += 2) {
             if (i + 1 < number_threads) {
@@ -194,7 +174,6 @@ void parallelRadixSort(std::vector<int>* data, int size, int number_threads) {
             }
         }
 
-
         for (int j = 0; j < number_threads - 1; j += 2) {
             sendCount[j / 2] = sendCount[j] + sendCount[j + 1];
             displ[j / 2] = displ[j];
@@ -203,11 +182,8 @@ void parallelRadixSort(std::vector<int>* data, int size, int number_threads) {
             sendCount[(number_threads - 1) / 2] = sendCount[number_threads - 1];
             displ[(number_threads - 1) / 2] = displ[number_threads - 1];
             number_threads = number_threads / 2 + 1;
-        }
-        else {
+        } else {
             number_threads /= 2;
         }
-    }
-        
-    
+    }    
 }
