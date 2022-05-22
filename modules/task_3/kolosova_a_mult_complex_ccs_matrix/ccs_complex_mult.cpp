@@ -143,7 +143,7 @@ CCS_matrix multiply_tbb(const CCS_matrix& A, const CCS_matrix& B) {
     std::vector<std::vector<std::complex<double>>> tmpVals(B.col_n);
     std::vector<std::vector<int>> tmpRows(B.col_n);
 
-    tbb::parallel_for(tbb::blocked_range<size_t>(0,B.col_n),
+    tbb::parallel_for(tbb::blocked_range<size_t>(0, B.col_n),
         [&](const tbb::blocked_range<size_t>& r) {
             int begin = r.begin(), end = r.end();
             for (int j = begin; j < end; j++) {
