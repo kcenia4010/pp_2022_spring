@@ -29,8 +29,7 @@ std::vector<std::vector<std::complex<double>>> generate_matrix(int r, int c,
                         matrix[i][j] = val(rgen);
                     }
                 }
-            }
-        );
+            });
     }
     return matrix;
 }
@@ -88,8 +87,7 @@ CCS_matrix transpose_tbb(const CCS_matrix& A) {
                     tmpVals[A.rows[j]].push_back(A.val[j]);
                     tmpRows[A.rows[j]].push_back(i);
                 }
-            }
-        );
+            });
     }
 
     int tmpCol = 0;
@@ -165,8 +163,7 @@ CCS_matrix multiply_tbb(const CCS_matrix& A, const CCS_matrix& B) {
                     }
                 }
             }
-        }
-    );
+        });
 
     CCS_matrix res(A.row_n, B.col_n);
     int tmpCol = 0;
