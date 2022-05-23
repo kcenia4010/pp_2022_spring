@@ -103,6 +103,7 @@ TEST(TBB, Test_3000x3000) {
                                                  std::vector<int>(width));
   double t3 = omp_get_wtime();
   binary_image_tbb = labeling_tbb(binary_image);
+
   double t4 = omp_get_wtime();
   int a = binary_image.size();
   for (int i = 0; i < a; i++)

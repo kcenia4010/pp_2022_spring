@@ -45,7 +45,6 @@ std::vector<std::vector<int>> labeling_tbb(
 
   Union un(height * width + 1);
   std::vector<std::vector<int>> res(height, std::vector<int>(width));
-
   tbb::task_scheduler_init init(THREADS);
   tbb::task_group gruppe;
   int step = height / THREADS;

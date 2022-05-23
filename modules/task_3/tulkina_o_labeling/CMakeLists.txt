@@ -8,6 +8,7 @@ if ( USE_TBB )
     file(GLOB_RECURSE ALL_SOURCE_FILES *.cpp *.h)
 
     set(PACK_LIB "${ProjectId}_lib")
+
     add_library(${PACK_LIB} STATIC ${ALL_SOURCE_FILES} )
 
     add_executable( ${ProjectId} ${ALL_SOURCE_FILES} )
