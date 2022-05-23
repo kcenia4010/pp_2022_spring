@@ -25,7 +25,7 @@ double getSequentialMonteKarlo(
 
   vector<std::uniform_real_distribution<double>> distributions(
       integrableDimensions);
-  for (unsigned int counter = 0; counter < integrableDimensions; ++counter) {
+  for (int counter = 0; counter < integrableDimensions; ++counter) {
     distributions[counter] = std::uniform_real_distribution<double>(
         lowerLimit[counter], upperLimit[counter]);
   }
@@ -34,8 +34,8 @@ double getSequentialMonteKarlo(
   std::mt19937 gen(rd());
 
   vector<double> randomPoints(integrableDimensions);
-  for (unsigned int counter = 0; counter < amountOfPoint; ++counter) {
-    for (unsigned int i = 0; i < integrableDimensions; ++i) {
+  for (int counter = 0; counter < amountOfPoint; ++counter) {
+    for (int i = 0; i < integrableDimensions; ++i) {
       randomPoints[i] = distributions[i](gen);
     }
 
@@ -43,7 +43,7 @@ double getSequentialMonteKarlo(
   }
 
   double partialResult = 1.0;
-  for (unsigned int counter = 0; counter < integrableDimensions; ++counter) {
+  for (int counter = 0; counter < integrableDimensions; ++counter) {
     partialResult *= upperLimit[counter] - lowerLimit[counter];
   }
 
@@ -66,7 +66,7 @@ double getParallelMonteKarlo(
 
   vector<std::uniform_real_distribution<double>> distributions(
       integrableDimensions);
-  for (unsigned int counter = 0; counter < integrableDimensions; ++counter) {
+  for (int counter = 0; counter < integrableDimensions; ++counter) {
     distributions[counter] = std::uniform_real_distribution<double>(
         lowerLimit[counter], upperLimit[counter]);
   }
@@ -76,8 +76,8 @@ double getParallelMonteKarlo(
 
   vector<double> randomPoints(integrableDimensions);
 #pragma omp parallel for firstprivate(randomPoints) reduction(+ : reductionResult)
-  for (unsigned int counter = 0; counter < amountOfPoint; ++counter) {
-    for (unsigned int i = 0; i < integrableDimensions; ++i) {
+  for (int counter = 0; counter < amountOfPoint; ++counter) {
+    for (int i = 0; i < integrableDimensions; ++i) {
       randomPoints[i] = distributions[i](gen);
     }
 
@@ -85,7 +85,7 @@ double getParallelMonteKarlo(
   }
 
   double partialResult = 1.0;
-  for (unsigned int counter = 0; counter < integrableDimensions; ++counter) {
+  for (int counter = 0; counter < integrableDimensions; ++counter) {
     partialResult *= upperLimit[counter] - lowerLimit[counter];
   }
 
