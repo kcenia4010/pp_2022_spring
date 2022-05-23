@@ -55,7 +55,7 @@ double getParallelMonteKarlo(
     std::function<double(std::vector<double>)> const& integrableFunction,
     const std::vector<double>& upperLimit,
     const std::vector<double>& lowerLimit,
-    const std::int amountOfPoint) {
+    const int amountOfPoint) {
   if (upperLimit.size() == 0 || lowerLimit.size() == 0 ||
       upperLimit.size() != lowerLimit.size()) {
     throw "Wrong limit!";
