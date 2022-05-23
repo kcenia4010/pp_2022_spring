@@ -14,7 +14,7 @@ class Union {
   std::vector<int> label_image;
 
  public:
-  Union(int N) {
+  explicit Union(int N) {
     label_image.resize(N);
     for (int i = 0; i < N; i++) {
       label_image[i] = i;
