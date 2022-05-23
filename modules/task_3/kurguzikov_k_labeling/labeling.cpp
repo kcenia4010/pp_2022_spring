@@ -1,4 +1,5 @@
 ﻿  //  Copyright 2022 Kurguzikov Kirill
+
 #define NOMINMAX
 #include <tbb/tbb.h>
 #include <vector>
