@@ -18,25 +18,25 @@ std::vector<std::vector<int>> labeling(
         if (x > 0 && binary_image[y][x - 1]) {
           un.set_label(index, y * width + x - 1 + 1);
         }
-
-        un.set_label(index, (y - 1) * width + x + 1);
-      }
-      if ((y > 0 && x > 0) && binary_image[y - 1][x - 1]) {
-        un.set_label(index, (y - 1) * width + (x - 1) + 1);
-      }
-      if ((y > 0 && x < width - 1) && binary_image[y - 1][x + 1]) {
-        un.set_label(index, (y - 1) * width + (x + 1) + 1);
+        if (y > 0 && binary_image[y - 1][x]) {
+          un.set_label(index, (y - 1) * width + x + 1);
+        }
+        if ((y > 0 && x > 0) && binary_image[y - 1][x - 1]) {
+          un.set_label(index, (y - 1) * width + (x - 1) + 1);
+        }
+        if ((y > 0 && x < width - 1) && binary_image[y - 1][x + 1]) {
+          un.set_label(index, (y - 1) * width + (x + 1) + 1);
+        }
       }
     }
   }
-}
 
-for (int y = 0; y < height; y++) {
-  for (int x = 0; x < width; x++) {
-    if (binary_image[y][x] > 0) res[y][x] = un.get_label(y * width + x + 1);
+  for (int y = 0; y < height; y++) {
+    for (int x = 0; x < width; x++) {
+      if (binary_image[y][x] > 0) res[y][x] = un.get_label(y * width + x + 1);
+    }
   }
-}
-return res;
+  return res;
 }
 
 std::vector<std::vector<int>> labeling_tbb(

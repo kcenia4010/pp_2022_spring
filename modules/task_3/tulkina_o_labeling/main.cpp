@@ -82,6 +82,7 @@ TEST(TBB, Test_10x10_version2) {
 TEST(TBB, Test_3000x3000) {
   int width = 3000;
   int height = 3000;
+
   std::random_device dev;
   std::mt19937 gen(dev());
   std::uniform_real_distribution<> urd(0, 2);
