@@ -12,7 +12,7 @@ double getSequentialMonteKarlo(
     function<double(vector<double>)> const& integrableFunction,
     const vector<double>& upperLimit,
     const vector<double>& lowerLimit,
-    const vector<double>::size_type amountOfPoint) {
+    const int amountOfPoint) {
   if (upperLimit.size() == 0 || lowerLimit.size() == 0 ||
       upperLimit.size() != lowerLimit.size()) {
     throw "Wrong limit!";

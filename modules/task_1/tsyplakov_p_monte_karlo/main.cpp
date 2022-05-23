@@ -4,7 +4,7 @@
 #include <vector>
 #include "./monte_karlo.h"
 
-const std::vector<double>::size_type amountOfPoints = 10000;
+const int amountOfPoints = 10000;
 
 TEST(MonteKarloSequential, Test_X_On_Y) {
   std::vector<double> upperLimit = {2, 5};

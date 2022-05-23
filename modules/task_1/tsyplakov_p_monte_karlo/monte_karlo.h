@@ -9,6 +9,6 @@ double getSequentialMonteKarlo(
     std::function<double(std::vector<double>)> const& integrableFunction,
     const std::vector<double>& upperLimit,
     const std::vector<double>& lowerLimit,
-    const std::vector<double>::size_type amountOfPoint);
+    const int amountOfPoint);
 
 #endif  // MODULES_TASK_1_TSYPLAKOV_P_MONTE_KARLO_MONTE_KARLO_H_
