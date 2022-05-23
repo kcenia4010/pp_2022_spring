@@ -50,9 +50,8 @@ TEST(TBB, Test_10x10) {
       {21, 0, 0, 0, 0, 0, 0, 2, 0, 2},   {21, 0, 0, 2, 0, 2, 0, 2, 0, 0},
       {21, 0, 2, 0, 2, 2, 2, 0, 0, 70},  {21, 0, 0, 2, 2, 2, 0, 0, 70, 70},
       {21, 0, 0, 0, 2, 0, 0, 0, 70, 70}, {21, 0, 0, 0, 0, 0, 70, 70, 70, 70}};
-
-  for (int i = 0; i < binary_image.size(); i++)
-    EXPECT_EQ(expected[i], binary_image[i]);
+  int a = binary_image.size();
+  for (int i = 0; i < a; i++) EXPECT_EQ(expected[i], binary_image[i]);
 }
 
 TEST(TBB, Test_10x10_version2) {
