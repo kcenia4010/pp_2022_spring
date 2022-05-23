@@ -25,7 +25,7 @@ double getSequentialMonteKarlo(
 
   vector<std::uniform_real_distribution<double>> distributions(
       integrableDimensions);
-  for (int counter = 0; counter < integrableDimensions; ++counter) {
+  for (unsigned int counter = 0; counter < integrableDimensions; ++counter) {
     distributions[counter] = std::uniform_real_distribution<double>(
         lowerLimit[counter], upperLimit[counter]);
   }
@@ -35,7 +35,7 @@ double getSequentialMonteKarlo(
 
   vector<double> randomPoints(integrableDimensions);
   for (int counter = 0; counter < amountOfPoint; ++counter) {
-    for (int i = 0; i < integrableDimensions; ++i) {
+    for (unsigned int i = 0; i < integrableDimensions; ++i) {
       randomPoints[i] = distributions[i](gen);
     }
 
@@ -43,7 +43,7 @@ double getSequentialMonteKarlo(
   }
 
   double partialResult = 1.0;
-  for (int counter = 0; counter < integrableDimensions; ++counter) {
+  for (unsigned int counter = 0; counter < integrableDimensions; ++counter) {
     partialResult *= upperLimit[counter] - lowerLimit[counter];
   }
 
@@ -66,7 +66,7 @@ double getParallelMonteKarlo(
 
   vector<std::uniform_real_distribution<double>> distributions(
       integrableDimensions);
-  for (int counter = 0; counter < integrableDimensions; ++counter) {
+  for (unsigned int counter = 0; counter < integrableDimensions; ++counter) {
     distributions[counter] = std::uniform_real_distribution<double>(
         lowerLimit[counter], upperLimit[counter]);
   }
@@ -77,7 +77,7 @@ double getParallelMonteKarlo(
   vector<double> randomPoints(integrableDimensions);
 #pragma omp parallel for firstprivate(randomPoints) reduction(+ : reductionResult)
   for (int counter = 0; counter < amountOfPoint; ++counter) {
-    for (int i = 0; i < integrableDimensions; ++i) {
+    for (unsigned int i = 0; i < integrableDimensions; ++i) {
       randomPoints[i] = distributions[i](gen);
     }
 
@@ -85,7 +85,7 @@ double getParallelMonteKarlo(
   }
 
   double partialResult = 1.0;
-  for (int counter = 0; counter < integrableDimensions; ++counter) {
+  for (unsigned int counter = 0; counter < integrableDimensions; ++counter) {
     partialResult *= upperLimit[counter] - lowerLimit[counter];
   }
 
