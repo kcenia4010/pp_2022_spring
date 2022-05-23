@@ -80,8 +80,8 @@ TEST(Dydykin_Rectangle_Method, Test_Two_Integral_Func4) {
 }
 
 // TEST(Dydykin_Rectangle_Method, Test_Three_Integral_Func) {
-//    std::vector<int> start = { 0, 3, 1 };
-//    std::vector<int> end = { 1, 5, 9 };
+//    std::vector<int> start = { 0, 0, 0 };
+//    std::vector<int> end = { 1, 1, 1 };
 //    int count = 1000000;
 //    tbb::tick_count t1 = tbb::tick_count::now();
 //    double result = Rectangle_Method_Seq(start, end, count, func5);
