@@ -1,8 +1,8 @@
 // Copyright 2022 Zarubin Mikhail
 
-#include <omp.h>
 #include <random>
-#include "../../../modules/task_2/zarubin_m_simpson_method/simpson_method.h"
+#include "../../../3rdparty/unapproved/unapproved.h"
+#include "../../../modules/task_4/zarubin_m_simpson_method/simpson_method.h"
 
 struct Partition {
     double left;
@@ -76,26 +76,15 @@ double simpsonMethodSeq(sizeType dimension,
     return integralValue;
 }
 
-double simpsonMethodParallel(sizeType dimension,
-    std::vector<double> leftBorders, std::vector<double> rightBorders,
-    std::function<double(std::vector<double>)> function, std::vector<sizeType> countParts) {
-    std::vector<double> coeffs(dimension);
-    sizeType iterCount = 1;
-
-    for (sizeType i = 0; i < dimension; i++) {
-        coeffs[i] = (rightBorders[i] - leftBorders[i]) / countParts[i];
-        iterCount *= countParts[i];
-    }
-
+void parallelSection(sizeType dimension, const std::vector<sizeType>& countParts,
+    const std::vector<double>& leftBorders, const std::vector<double>& rightBorders,
+    const std::vector<double>& coeffs, std::function<double(std::vector<double>)> function,
+    sizeType begin, sizeType end, double* returnableValue) {
     double integralValue = 0.0;
     sizeType count = static_cast<sizeType>(std::pow(6, dimension));
     std::vector<Partition> partitions(dimension);
     std::vector<double> args(dimension);
-
-#pragma omp parallel shared(dimension, iterCount, coeffs, leftBorders, count, countParts) \
-  firstprivate(partitions, args) reduction(+ : integralValue)
-#pragma omp for schedule(static)
-    for (int i = 0; i < static_cast<int>(iterCount); i++) {
+    for (sizeType i = begin; i < end; i++) {
         sizeType temp = i;
         for (sizeType j = 0; j < dimension; j++) {
             double left = leftBorders[j] + temp % countParts[j] * coeffs[j];
@@ -127,9 +116,42 @@ double simpsonMethodParallel(sizeType dimension,
         }
     }
 
-#pragma omp for schedule(static)
-    for (int i = 0; i < static_cast<int>(dimension); i++) {
+    for (sizeType i = 0; i < dimension; i++) {
         integralValue *= (coeffs[i] / 6);
+    }
+
+    *returnableValue = integralValue;
+}
+
+double simpsonMethodParallel(sizeType dimension,
+    std::vector<double> leftBorders, std::vector<double> rightBorders,
+    std::function<double(std::vector<double>)> function, std::vector<sizeType> countParts,
+    sizeType threadsCount) {
+    std::vector<double> coeffs(dimension);
+    sizeType iterCount = 1;
+
+    for (sizeType i = 0; i < dimension; i++) {
+        coeffs[i] = (rightBorders[i] - leftBorders[i]) / countParts[i];
+        iterCount *= countParts[i];
+    }
+
+    std::vector<double> localIntegralValue(threadsCount, 0);
+    std::vector<std::thread> threads(threadsCount);
+    sizeType begin = 0, end = 0;
+    for (sizeType i = 0; i < threadsCount; i++) {
+        begin = end;
+        end = (iterCount / threadsCount) * (i + 1) + (i == threadsCount - 1 ? iterCount % threadsCount : 0);
+
+        threads[i] = std::thread(parallelSection, dimension, countParts,
+            leftBorders, rightBorders,
+            coeffs, function,
+            begin, end, &localIntegralValue[i]);
+    }
+
+    double integralValue = 0.0;
+    for (sizeType i = 0; i < threadsCount; i++) {
+        threads[i].join();
+        integralValue += localIntegralValue[i];
     }
 
     return integralValue;
