@@ -76,7 +76,7 @@ double getParallelMonteKarlo(
 
   vector<double> randomPoints(integrableDimensions);
 #pragma omp parallel for firstprivate(randomPoints) reduction(+ : reductionResult)
-  for (int counter = 0; counter < amountOfPoint; ++counter) {
+  for (size_t counter = 0; counter < amountOfPoint; ++counter) {
     for (unsigned int i = 0; i < integrableDimensions; ++i) {
       randomPoints[i] = distributions[i](gen);
     }
