@@ -17,7 +17,7 @@ double getSequentialMonteKarlo(
     const vector<double>::size_type amountOfPoint) {
   if (upperLimit.size() == 0 || lowerLimit.size() == 0 ||
       upperLimit.size() != lowerLimit.size()) {
-    throw exception("Wrong limit!");
+    throw "Wrong limit!";
   }
 
   double result = 0.0;
@@ -25,7 +25,7 @@ double getSequentialMonteKarlo(
 
   vector<std::uniform_real_distribution<double>> distributions(
       integrableDimensions);
-  for (auto counter = 0; counter < integrableDimensions; ++counter) {
+  for (long unsigned int counter = 0; counter < integrableDimensions; ++counter) {
     distributions[counter] = std::uniform_real_distribution<double>(
         lowerLimit[counter], upperLimit[counter]);
   }
@@ -34,8 +34,8 @@ double getSequentialMonteKarlo(
   std::mt19937 gen(rd());
 
   vector<double> randomPoints(integrableDimensions);
-  for (auto counter = 0; counter < amountOfPoint; ++counter) {
-    for (auto i = 0; i < integrableDimensions; ++i) {
+  for (long unsigned int counter = 0; counter < amountOfPoint; ++counter) {
+    for (long unsigned int i = 0; i < integrableDimensions; ++i) {
       randomPoints[i] = distributions[i](gen);
     }
 
@@ -43,7 +43,7 @@ double getSequentialMonteKarlo(
   }
 
   double partialResult = 1.0;
-  for (auto counter = 0; counter < integrableDimensions; ++counter) {
+  for (long unsigned int counter = 0; counter < integrableDimensions; ++counter) {
     partialResult *= upperLimit[counter] - lowerLimit[counter];
   }
 
@@ -58,7 +58,7 @@ double getParallelMonteKarlo(
     const std::vector<double>::size_type amountOfPoint) {
   if (upperLimit.size() == 0 || lowerLimit.size() == 0 ||
       upperLimit.size() != lowerLimit.size()) {
-    throw exception("Wrong limit!");
+    throw "Wrong limit!";
   }
 
   double reductionResult = 0.0;
@@ -66,7 +66,7 @@ double getParallelMonteKarlo(
 
   vector<std::uniform_real_distribution<double>> distributions(
       integrableDimensions);
-  for (auto counter = 0; counter < integrableDimensions; ++counter) {
+  for (long unsigned int counter = 0; counter < integrableDimensions; ++counter) {
     distributions[counter] = std::uniform_real_distribution<double>(
         lowerLimit[counter], upperLimit[counter]);
   }
@@ -75,10 +75,9 @@ double getParallelMonteKarlo(
   std::mt19937 gen(rd());
 
   vector<double> randomPoints(integrableDimensions);
-  int numberOfThread = omp_get_num_procs();
 #pragma omp parallel for firstprivate(randomPoints) reduction(+ : reductionResult)
-  for (auto counter = 0; counter < amountOfPoint; ++counter) {
-    for (auto i = 0; i < integrableDimensions; ++i) {
+  for (long unsigned int counter = 0; counter < amountOfPoint; ++counter) {
+    for (long unsigned int i = 0; i < integrableDimensions; ++i) {
       randomPoints[i] = distributions[i](gen);
     }
 
@@ -86,7 +85,7 @@ double getParallelMonteKarlo(
   }
 
   double partialResult = 1.0;
-  for (auto counter = 0; counter < integrableDimensions; ++counter) {
+  for (long unsigned int counter = 0; counter < integrableDimensions; ++counter) {
     partialResult *= upperLimit[counter] - lowerLimit[counter];
   }
 
