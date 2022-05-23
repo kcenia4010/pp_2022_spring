@@ -23,7 +23,7 @@ double getSequentialMonteKarlo(
 
   vector<std::uniform_real_distribution<double>> distributions(
       integrableDimensions);
-  for (long unsigned int counter = 0; counter < integrableDimensions; ++counter) {
+  for (unsigned int counter = 0; counter < integrableDimensions; ++counter) {
     distributions[counter] = std::uniform_real_distribution<double>(
         lowerLimit[counter], upperLimit[counter]);
   }
@@ -32,8 +32,8 @@ double getSequentialMonteKarlo(
   std::mt19937 gen(rd());
 
   vector<double> randomPoints(integrableDimensions);
-  for (long unsigned int counter = 0; counter < amountOfPoint; ++counter) {
-    for (long unsigned int i = 0; i < integrableDimensions; ++i) {
+  for (unsigned int counter = 0; counter < amountOfPoint; ++counter) {
+    for (unsigned int i = 0; i < integrableDimensions; ++i) {
       randomPoints[i] = distributions[i](gen);
     }
 
@@ -41,7 +41,7 @@ double getSequentialMonteKarlo(
   }
 
   double partialResult = 1.0;
-  for (long unsigned int counter = 0; counter < integrableDimensions; ++counter) {
+  for (unsigned int counter = 0; counter < integrableDimensions; ++counter) {
     partialResult *= upperLimit[counter] - lowerLimit[counter];
   }
 
