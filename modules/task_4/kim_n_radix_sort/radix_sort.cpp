@@ -1,5 +1,6 @@
 // Copyright 2022 Kim Nikita
 
+#include <omp.h>
 #include <vector>
 #include <deque>
 #include <random>

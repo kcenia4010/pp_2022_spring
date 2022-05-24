@@ -5,7 +5,7 @@
 #include <iostream>
 #include "./radix_sort.h"
 
-TEST(STD_THREDAD, Vector_One_Size) {
+TEST(STD_THREAD, Vector_One_Size) {
   int size = 1;
   std::vector<int> input_vec = getRandomVector(size);
 
