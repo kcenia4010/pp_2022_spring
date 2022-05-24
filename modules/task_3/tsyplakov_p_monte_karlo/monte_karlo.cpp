@@ -93,6 +93,6 @@ double getParallelMonteKarlo(
     partialResult *= upperLimit[counter] - lowerLimit[counter];
   }
 
-  reductionResult *= (partialResult / (double)amountOfPoint);
+  reductionResult *= (partialResult / amountOfPoint);
   return reductionResult;
 }
