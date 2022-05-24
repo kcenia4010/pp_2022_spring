@@ -1,6 +1,6 @@
 // Copyright 2022 Kim Nikita
 #include <gtest/gtest.h>
-#include <omp.h>
+// #include <omp.h>
 #include <vector>
 #include <iostream>
 #include "./radix_sort.h"
@@ -73,19 +73,19 @@ TEST(STD_THREAD, Vector_Even_Large_Size) {
 
 TEST(STD_THREAD, Vector_Mega_Large_Size) {
   int size = 1000003;
-  double t1, t2;
+  // double t1, t2;
   std::vector<int> input_vec = getRandomVector(size);
 
-  t1 = omp_get_wtime();
+  // t1 = omp_get_wtime();
   std::vector<int> exp_res = radixSort(input_vec, size);
-  t1 = omp_get_wtime() - t1;
+  // t1 = omp_get_wtime() - t1;
 
-  t2 = omp_get_wtime();
+  // t2 = omp_get_wtime();
   std::vector<int> res = radixSortParallel(input_vec, size);
-  t2 = omp_get_wtime() - t2;
+  // t2 = omp_get_wtime() - t2;
 
   ASSERT_EQ(exp_res, res);
-  std::cout << "Sequential: " << t1 << " Parallel: " << t2 << "\n" << "Boost: " << t1/t2 << "\n";
+  // std::cout << "Sequential: " << t1 << " Parallel: " << t2 << "\n" << "Boost: " << t1/t2 << "\n";
 }
 
 int main(int argc, char **argv) {
