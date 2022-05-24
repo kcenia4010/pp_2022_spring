@@ -1,5 +1,5 @@
 // Copyright 2022 Ivina Anastasiya
-#include "Fox_alg_tbb.h"
+#include "../../../modules/task_3/ivina_a_fox_alg_tbb/Fox_alg_tbb.h"
 
 #include <tbb/parallel_for.h>
 #include <tbb/task_scheduler_init.h>

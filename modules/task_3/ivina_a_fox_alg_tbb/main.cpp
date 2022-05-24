@@ -6,7 +6,7 @@
 #include <iostream>
 #include <vector>
 
-#include "Fox_alg_tbb.h"
+#include "./Fox_alg_tbb.h"
 
 TEST(MatrixMultTBB, RandNumCorrectSize) {
   const int size = 3;
