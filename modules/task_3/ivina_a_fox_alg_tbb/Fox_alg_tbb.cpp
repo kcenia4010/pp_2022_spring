@@ -152,18 +152,15 @@ Matrix Fox(const Matrix& a, const Matrix& b) {
   auto BlockedRange = tbb::blocked_range<size_t>(0, MatrixSize);
 
   for (size_t stage = 0U; stage < MatrixSize; stage++) {
-    tbb::atomic<int> counter{};
-    tbb::atomic<int> task_id{0};
+    tbb::atomic<size_t> task_id{0};
     tbb::parallel_for(BlockedRange, [&](tbb::blocked_range<size_t> r) {
-      int tid = task_id++;
+      size_t tid = task_id++;
       if (tid >= tasks.size()) return;
       process(tasks[tid], newA, newB, stage, c, temp, a);
-      counter++;
     });
     for (const auto& task : tasks) {
       process_B(task, newB, temp);
     }
   }
-
   return c;
 }
