@@ -1,4 +1,4 @@
-﻿  //  Copyright 2022 Kurguzikov Kirill
+﻿  //  Copyright 2022 Kurguzikov Kiril
 
 #include <omp.h>
 #include <vector>
