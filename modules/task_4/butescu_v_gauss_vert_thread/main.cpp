@@ -32,10 +32,10 @@ TEST(Gaussian_Filter_Thread, Test_Random_Matrix_Size_25x25) {
     auto start_thread = clock();
     std::vector <double> pp = gauss_filter_parralel_thread(matrix, cols, rows);
     auto end_thread = clock();
-    double omp_time = static_cast<double>(start_thread - end_thread) / CLOCKS_PER_SEC;
+    double thread_time = static_cast<double>(start_thread - end_thread) / CLOCKS_PER_SEC;
 
     std::cout << "SQ TIME: " << seq_time << std::endl;
-    std::cout << "PP TIME: " << omp_time << std::endl;
+    std::cout << "PP TIME: " << thread_time << std::endl;
 
     ASSERT_EQ(sq, pp);
 }
@@ -53,10 +53,10 @@ TEST(Gaussian_Filter_Thread, Test_Random_Matrix_Size_100x100) {
     auto start_thread = clock();
     std::vector <double> pp = gauss_filter_parralel_thread(matrix, cols, rows);
     auto end_thread = clock();
-    double omp_time = static_cast<double>(start_thread - end_thread) / CLOCKS_PER_SEC;
+    double thread_time = static_cast<double>(start_thread - end_thread) / CLOCKS_PER_SEC;
 
     std::cout << "SQ TIME: " << seq_time << std::endl;
-    std::cout << "PP TIME: " << omp_time << std::endl;
+    std::cout << "PP TIME: " << thread_time << std::endl;
 
     ASSERT_EQ(sq, pp);
 }
@@ -74,10 +74,10 @@ TEST(Gaussian_Filter_Thread, Test_Random_Matrix_Size_250x250) {
     auto start_thread = clock();
     std::vector <double> pp = gauss_filter_parralel_thread(matrix, cols, rows);
     auto end_thread = clock();
-    double omp_time = static_cast<double>(start_thread - end_thread) / CLOCKS_PER_SEC;
+    double thread_time = static_cast<double>(start_thread - end_thread) / CLOCKS_PER_SEC;
 
     std::cout << "SQ TIME: " << seq_time << std::endl;
-    std::cout << "PP TIME: " << omp_time << std::endl;
+    std::cout << "PP TIME: " << thread_time << std::endl;
 
     ASSERT_EQ(sq, pp);
 }
@@ -95,10 +95,10 @@ TEST(Gaussian_Filter_Thread, Test_Random_Matrix_Size_500x500) {
     auto start_thread = clock();
     std::vector <double> pp = gauss_filter_parralel_thread(matrix, cols, rows);
     auto end_thread = clock();
-    double omp_time = static_cast<double>(start_thread - end_thread) / CLOCKS_PER_SEC;
+    double thread_time = static_cast<double>(start_thread - end_thread) / CLOCKS_PER_SEC;
 
     std::cout << "SQ TIME: " << seq_time << std::endl;
-    std::cout << "PP TIME: " << omp_time << std::endl;
+    std::cout << "PP TIME: " << thread_time << std::endl;
 
     ASSERT_EQ(sq, pp);
 }
@@ -116,10 +116,10 @@ TEST(Gaussian_Filter_Thread, Test_Random_Matrix_Size_1000x1000) {
     auto start_thread = clock();
     std::vector <double> pp = gauss_filter_parralel_thread(matrix, cols, rows);
     auto end_thread = clock();
-    double omp_time = static_cast<double>(start_thread - end_thread) / CLOCKS_PER_SEC;
+    double thread_time = static_cast<double>(start_thread - end_thread) / CLOCKS_PER_SEC;
 
     std::cout << "SQ TIME: " << seq_time << std::endl;
-    std::cout << "PP TIME: " << omp_time << std::endl;
+    std::cout << "PP TIME: " << thread_time << std::endl;
 
     ASSERT_EQ(sq, pp);
 }
@@ -137,10 +137,10 @@ TEST(Gaussian_Filter_Thread, Test_Random_Matrix_Size_5000x5000) {
     auto start_thread = clock();
     std::vector <double> pp = gauss_filter_parralel_thread(matrix, cols, rows);
     auto end_thread = clock();
-    double omp_time = static_cast<double>(start_thread - end_thread) / CLOCKS_PER_SEC;
+    double thread_time = static_cast<double>(start_thread - end_thread) / CLOCKS_PER_SEC;
 
     std::cout << "SQ TIME: " << seq_time << std::endl;
-    std::cout << "PP TIME: " << omp_time << std::endl;
+    std::cout << "PP TIME: " << thread_time << std::endl;
 
     ASSERT_EQ(sq, pp);
 }
