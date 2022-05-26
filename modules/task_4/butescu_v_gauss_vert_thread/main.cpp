@@ -24,15 +24,15 @@ TEST(Gaussian_Filter_Thread, Test_Random_Matrix_Size_25x25) {
     int cols = 25;
     std::vector<double> matrix = createRandomMatrix(rows, cols);
 
-    clock_t start_seq = clock();
+    auto start_seq = clock();
     std::vector <double> sq = gauss_filter_sequence(matrix, cols, rows);
-    clock_t end_seq = clock();
-    double seq_time = (double)(end_seq - start_seq) / CLOCKS_PER_SEC;
+    auto end_seq = clock();
+    double seq_time = static_cast<double>(end_seq - start_seq) / CLOCKS_PER_SEC;
 
-    clock_t start_thread = clock();
+    auto start_thread = clock();
     std::vector <double> pp = gauss_filter_parralel_thread(matrix, cols, rows);
-    clock_t end_thread = clock();
-    double omp_time = (double)(end_thread - start_thread) / CLOCKS_PER_SEC;
+    auto end_thread = clock();
+    double omp_time = static_cast<double>(end_seq - start_seq) / CLOCKS_PER_SEC;
 
     std::cout << "SQ TIME: " << seq_time << std::endl;
     std::cout << "PP TIME: " << omp_time << std::endl;
@@ -45,15 +45,15 @@ TEST(Gaussian_Filter_Thread, Test_Random_Matrix_Size_100x100) {
     int cols = 100;
     std::vector<double> matrix = createRandomMatrix(rows, cols);
 
-    clock_t start_seq = clock();
+    auto start_seq = clock();
     std::vector <double> sq = gauss_filter_sequence(matrix, cols, rows);
-    clock_t end_seq = clock();
-    double seq_time = (double)(end_seq - start_seq) / CLOCKS_PER_SEC;
+    auto end_seq = clock();
+    double seq_time = static_cast<double>(end_seq - start_seq) / CLOCKS_PER_SEC;
 
-    clock_t start_thread = clock();
+    auto start_thread = clock();
     std::vector <double> pp = gauss_filter_parralel_thread(matrix, cols, rows);
-    clock_t end_thread = clock();
-    double omp_time = (double)(end_thread - start_thread) / CLOCKS_PER_SEC;
+    auto end_thread = clock();
+    double omp_time = static_cast<double>(end_seq - start_seq) / CLOCKS_PER_SEC;
 
     std::cout << "SQ TIME: " << seq_time << std::endl;
     std::cout << "PP TIME: " << omp_time << std::endl;
@@ -66,15 +66,15 @@ TEST(Gaussian_Filter_Thread, Test_Random_Matrix_Size_250x250) {
     int cols = 250;
     std::vector<double> matrix = createRandomMatrix(rows, cols);
 
-    clock_t start_seq = clock();
+    auto start_seq = clock();
     std::vector <double> sq = gauss_filter_sequence(matrix, cols, rows);
-    clock_t end_seq = clock();
-    double seq_time = (double)(end_seq - start_seq) / CLOCKS_PER_SEC;
+    auto end_seq = clock();
+    double seq_time = static_cast<double>(end_seq - start_seq) / CLOCKS_PER_SEC;
 
-    clock_t start_thread = clock();
+    auto start_thread = clock();
     std::vector <double> pp = gauss_filter_parralel_thread(matrix, cols, rows);
-    clock_t end_thread = clock();
-    double omp_time = (double)(end_thread - start_thread) / CLOCKS_PER_SEC;
+    auto end_thread = clock();
+    double omp_time = static_cast<double>(end_seq - start_seq) / CLOCKS_PER_SEC;
 
     std::cout << "SQ TIME: " << seq_time << std::endl;
     std::cout << "PP TIME: " << omp_time << std::endl;
@@ -87,15 +87,15 @@ TEST(Gaussian_Filter_Thread, Test_Random_Matrix_Size_500x500) {
     int cols = 500;
     std::vector<double> matrix = createRandomMatrix(rows, cols);
 
-    clock_t start_seq = clock();
+    auto start_seq = clock();
     std::vector <double> sq = gauss_filter_sequence(matrix, cols, rows);
-    clock_t end_seq = clock();
-    double seq_time = (double)(end_seq - start_seq) / CLOCKS_PER_SEC;
+    auto end_seq = clock();
+    double seq_time = static_cast<double>(end_seq - start_seq) / CLOCKS_PER_SEC;
 
-    clock_t start_thread = clock();
+    auto start_thread = clock();
     std::vector <double> pp = gauss_filter_parralel_thread(matrix, cols, rows);
-    clock_t end_thread = clock();
-    double omp_time = (double)(end_thread - start_thread) / CLOCKS_PER_SEC;
+    auto end_thread = clock();
+    double omp_time = static_cast<double>(end_seq - start_seq) / CLOCKS_PER_SEC;
 
     std::cout << "SQ TIME: " << seq_time << std::endl;
     std::cout << "PP TIME: " << omp_time << std::endl;
@@ -108,15 +108,15 @@ TEST(Gaussian_Filter_Thread, Test_Random_Matrix_Size_1000x1000) {
     int cols = 1000;
     std::vector<double> matrix = createRandomMatrix(rows, cols);
 
-    clock_t start_seq = clock();
+    auto start_seq = clock();
     std::vector <double> sq = gauss_filter_sequence(matrix, cols, rows);
-    clock_t end_seq = clock();
-    double seq_time = (double)(end_seq - start_seq) / CLOCKS_PER_SEC;
+    auto end_seq = clock();
+    double seq_time = static_cast<double>(end_seq - start_seq) / CLOCKS_PER_SEC;
 
-    clock_t start_thread = clock();
+    auto start_thread = clock();
     std::vector <double> pp = gauss_filter_parralel_thread(matrix, cols, rows);
-    clock_t end_thread = clock();
-    double omp_time = (double)(end_thread - start_thread) / CLOCKS_PER_SEC;
+    auto end_thread = clock();
+    double omp_time = static_cast<double>(end_seq - start_seq) / CLOCKS_PER_SEC;
 
     std::cout << "SQ TIME: " << seq_time << std::endl;
     std::cout << "PP TIME: " << omp_time << std::endl;
@@ -129,15 +129,15 @@ TEST(Gaussian_Filter_Thread, Test_Random_Matrix_Size_5000x5000) {
     int cols = 1000;
     std::vector<double> matrix = createRandomMatrix(rows, cols);
 
-    clock_t start_seq = clock();
+    auto start_seq = clock();
     std::vector <double> sq = gauss_filter_sequence(matrix, cols, rows);
-    clock_t end_seq = clock();
-    double seq_time = (double)(end_seq - start_seq) / CLOCKS_PER_SEC;
+    auto end_seq = clock();
+    double seq_time = static_cast<double>(end_seq - start_seq) / CLOCKS_PER_SEC;
 
-    clock_t start_thread = clock();
+    auto start_thread = clock();
     std::vector <double> pp = gauss_filter_parralel_thread(matrix, cols, rows);
-    clock_t end_thread = clock();
-    double omp_time = (double)(end_thread - start_thread) / CLOCKS_PER_SEC;
+    auto end_thread = clock();
+    double omp_time = static_cast<double>(end_seq - start_seq) / CLOCKS_PER_SEC;
 
     std::cout << "SQ TIME: " << seq_time << std::endl;
     std::cout << "PP TIME: " << omp_time << std::endl;
