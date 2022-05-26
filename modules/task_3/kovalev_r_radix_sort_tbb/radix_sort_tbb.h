@@ -1,6 +1,6 @@
 // Copyright 2022 Kovalev Ruslan
-#ifndef MODULES_TASK_3_KOVALEV_R_ODD_EVEN_SORT_TBB_ODD_EVEN_SORT_TBB_H_
-#define MODULES_TASK_3_KOVALEV_R_ODD_EVEN_SORT_TBB_ODD_EVEN_SORT_TBB_H_
+#ifndef MODULES_TASK_3_KOVALEV_R_RADIX_SORT_TBB_RADIX_SORT_TBB_H_
+#define MODULES_TASK_3_KOVALEV_R_RADIX_SORT_TBB_RADIX_SORT_TBB_H_
 #include <string>
 #include <vector>
 
@@ -16,4 +16,4 @@ void countingSort(std::vector<int>* arr, int size, int place);
 
 void getSortParallel(std::vector<int>* arr, int sz);
 
-#endif  // MODULES_TASK_3_KOVALEV_R_ODD_EVEN_SORT_TBB_ODD_EVEN_SORT_TBB_H_
+#endif  // MODULES_TASK_3_KOVALEV_R_RADIX_SORT_TBB_RADIX_SORT_TBB_H_
