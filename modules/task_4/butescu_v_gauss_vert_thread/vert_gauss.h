@@ -3,7 +3,6 @@
 #define MODULES_TASK_4_BUTESCU_V_GAUSS_VERT_THREAD_VERT_GAUSS_H_
 
 #include <omp.h>
-#include <thread>
 #include <vector>
 #include <random>
 #include <ctime>

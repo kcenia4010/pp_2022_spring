@@ -1,4 +1,5 @@
 // Copyright 2022 Butescu Vladimir
+#include "../../../3rdparty/unapproved/unapproved.h"
 #include "../../../modules/task_4/butescu_v_gauss_vert_thread/vert_gauss.h"
 
 int clamp(int value, int max, int min) {
@@ -103,8 +104,7 @@ std::vector<double> gauss_filter_parralel_thread(const std::vector<double>& matr
             residue--;
         }
         threads[k] = std::thread(
-            [&](int begin, int end)
-            {
+            [&](int begin, int end) {
                 for (int x = begin; x < end; x++) {
                     for (int y = 0; y < cols; y++) {
                         double res = 0;
