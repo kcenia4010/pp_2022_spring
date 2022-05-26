@@ -9,6 +9,7 @@
 #include <cmath>
 #include "../../../modules/task_3/kurguzikov_k_labeling/labeling.h"
 
+
 int check_for_par(std::vector<std::vector<int>> lab, int rows, int cols) {
     bool equality = true;
     for (int i = 0; i < rows; i++) {
