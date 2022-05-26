@@ -3,7 +3,7 @@
 #include <iostream>
 #include <random>
 #include <vector>
-#include "../../../kovalev_r_radix_sort_tbb/modules/task_3/kovalev_r_radix_sort_tbb/radix_sort_tbb.h"
+#include "../../../modules/task_3/kovalev_r_radix_sort_tbb/radix_sort_tbb.h"
 
 void copy_vectors(std::vector<int>* arr_1, std::vector<int>* arr_2, int sz) {
   for (int i = 0; i < sz; i++) {
