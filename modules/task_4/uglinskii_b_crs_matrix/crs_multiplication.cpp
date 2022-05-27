@@ -332,6 +332,11 @@ int CRSMultiplySTD(MatrixCRS A, MatrixCRS B, MatrixCRS *C) {
         },
         local_begin, local_end);
   }
+
+  for (int th = 0; th < threads_num; ++th) {
+    threads[th].join();
+  }
+
   int rows_NZ = 0;
   for (int i = 0; i < A.N; i++) {
     col.insert(col.end(), local_col[i].begin(), local_col[i].end());

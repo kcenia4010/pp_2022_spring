@@ -7,6 +7,7 @@
 
 #include "./crs_multiplication.h"
 
+
 TEST(Multiplication_seq, crs_50x50_30) {
   MatrixCRS matrix_A = GenerateRandomMatrixCRS(50, 50, 30);
   MatrixCRS matrix_B = GenerateRandomMatrixCRS(50, 50, 30);
@@ -23,117 +24,62 @@ TEST(Multiplication_seq, crs_50x50_30) {
 }
 
 TEST(Multiplication_parallel, 3x3_4) {
-
   MatrixCRS matrix_A = GenerateRandomMatrixCRS(3, 3, 4);
   MatrixCRS matrix_B = GenerateRandomMatrixCRS(3, 3, 4);
 
   MatrixCRS matrix_C;
-  auto t1 = clock();
   CRSMultiply(matrix_A, matrix_B, &matrix_C);
-  auto t2 = clock();
 
   MatrixCRS C_std;
-  auto t1_ = clock();
   CRSMultiplySTD(matrix_A, matrix_B, &C_std);
-  auto t2_ = clock();
-  std::cout << "NO STD time = " << static_cast<float>(t2 - t1) / CLOCKS_PER_SEC
-            << "\nSTD time = " << static_cast<float>(t2_ - t1_) / CLOCKS_PER_SEC
-            << "\nAcceleration = "
-            << (static_cast<float>(t2 - t1) / CLOCKS_PER_SEC) /
-                   (static_cast<float>(t2_ - t1_) / CLOCKS_PER_SEC)
-            << "\n";
   ASSERT_TRUE(CompareMatrixCRS(matrix_C, C_std));
 }
 
-TEST(Multiplication_parallel, 50x50_30) {
-
-  MatrixCRS matrix_A = GenerateRandomMatrixCRS(50, 50, 30);
-  MatrixCRS matrix_B = GenerateRandomMatrixCRS(50, 50, 30);
+TEST(Multiplication_parallel, 10x10_10) {
+  MatrixCRS matrix_A = GenerateRandomMatrixCRS(10, 10, 10);
+  MatrixCRS matrix_B = GenerateRandomMatrixCRS(10, 10, 10);
 
   MatrixCRS matrix_C;
-  auto t1 = clock();
   CRSMultiply(matrix_A, matrix_B, &matrix_C);
-  auto t2 = clock();
 
   MatrixCRS C_std;
-  auto t1_ = clock();
   CRSMultiplySTD(matrix_A, matrix_B, &C_std);
-  auto t2_ = clock();
-  std::cout << "NO STD time = " << static_cast<float>(t2 - t1) / CLOCKS_PER_SEC
-            << "\nSTD time = " << static_cast<float>(t2_ - t1_) / CLOCKS_PER_SEC
-            << "\nAcceleration = "
-            << (static_cast<float>(t2 - t1) / CLOCKS_PER_SEC) /
-                   (static_cast<float>(t2_ - t1_) / CLOCKS_PER_SEC)
-            << "\n";
   ASSERT_TRUE(CompareMatrixCRS(matrix_C, C_std));
 }
 
-TEST(Multiplication_parallel, 200x200_350) {
-
-  MatrixCRS matrix_A = GenerateRandomMatrixCRS(200, 200, 350);
-  MatrixCRS matrix_B = GenerateRandomMatrixCRS(200, 200, 350);
+TEST(Multiplication_parallel, 25x25_35) {
+  MatrixCRS matrix_A = GenerateRandomMatrixCRS(25, 25, 35);
+  MatrixCRS matrix_B = GenerateRandomMatrixCRS(25, 25, 35);
 
   MatrixCRS matrix_C;
-  auto t1 = clock();
   CRSMultiply(matrix_A, matrix_B, &matrix_C);
-  auto t2 = clock();
 
   MatrixCRS C_std;
-  auto t1_ = clock();
   CRSMultiplySTD(matrix_A, matrix_B, &C_std);
-  auto t2_ = clock();
-  std::cout << "NO STD time = " << static_cast<float>(t2 - t1) / CLOCKS_PER_SEC
-            << "\nSTD time = " << static_cast<float>(t2_ - t1_) / CLOCKS_PER_SEC
-            << "\nAcceleration = "
-            << (static_cast<float>(t2 - t1) / CLOCKS_PER_SEC) /
-                   (static_cast<float>(t2_ - t1_) / CLOCKS_PER_SEC)
-            << "\n";
   ASSERT_TRUE(CompareMatrixCRS(matrix_C, C_std));
 }
 
-TEST(Multiplication_parallel, 250x250_400) {
-
-  MatrixCRS matrix_A = GenerateRandomMatrixCRS(250, 250, 400);
-  MatrixCRS matrix_B = GenerateRandomMatrixCRS(250, 250, 400);
+TEST(Multiplication_parallel, 30x30_40) {
+  MatrixCRS matrix_A = GenerateRandomMatrixCRS(30, 30, 40);
+  MatrixCRS matrix_B = GenerateRandomMatrixCRS(30, 30, 40);
 
   MatrixCRS matrix_C;
-  auto t1 = clock();
   CRSMultiply(matrix_A, matrix_B, &matrix_C);
-  auto t2 = clock();
 
   MatrixCRS C_std;
-  auto t1_ = clock();
   CRSMultiplySTD(matrix_A, matrix_B, &C_std);
-  auto t2_ = clock();
-  std::cout << "NO STD time = " << static_cast<float>(t2 - t1) / CLOCKS_PER_SEC
-            << "\nSTD time = " << static_cast<float>(t2_ - t1_) / CLOCKS_PER_SEC
-            << "\nAcceleration = "
-            << (static_cast<float>(t2 - t1) / CLOCKS_PER_SEC) /
-                   (static_cast<float>(t2_ - t1_) / CLOCKS_PER_SEC)
-            << "\n";
   ASSERT_TRUE(CompareMatrixCRS(matrix_C, C_std));
 }
 
-TEST(Multiplication_parallel, 300x300_2000) {
-
-  MatrixCRS matrix_A = GenerateRandomMatrixCRS(300, 300, 2000);
-  MatrixCRS matrix_B = GenerateRandomMatrixCRS(300, 300, 2000);
+TEST(Multiplication_parallel, 50x50_65) {
+  MatrixCRS matrix_A = GenerateRandomMatrixCRS(50, 50, 65);
+  MatrixCRS matrix_B = GenerateRandomMatrixCRS(50, 50, 65);
 
   MatrixCRS matrix_C;
-  auto t1 = clock();
   CRSMultiply(matrix_A, matrix_B, &matrix_C);
-  auto t2 = clock();
 
   MatrixCRS C_std;
-  auto t1_ = clock();
   CRSMultiplySTD(matrix_A, matrix_B, &C_std);
-  auto t2_ = clock();
-  std::cout << "NO STD time = " << static_cast<float>(t2 - t1) / CLOCKS_PER_SEC
-            << "\nSTD time = " << static_cast<float>(t2_ - t1_) / CLOCKS_PER_SEC
-            << "\nAcceleration = "
-            << (static_cast<float>(t2 - t1) / CLOCKS_PER_SEC) /
-                   (static_cast<float>(t2_ - t1_) / CLOCKS_PER_SEC)
-            << "\n";
   ASSERT_TRUE(CompareMatrixCRS(matrix_C, C_std));
 }
 
