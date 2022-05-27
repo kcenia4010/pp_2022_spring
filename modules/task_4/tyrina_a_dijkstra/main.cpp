@@ -1,7 +1,7 @@
 // Copyright 2022 Tyrina Anastasia
 #include <gtest/gtest.h>
-#include <omp.h>
 
+#include "../../../3rdparty/unapproved/unapproved.h"
 #include "./dijkstra.h"
 
 TEST(DIJKSTRA_STD, TEST_1) {
@@ -48,22 +48,21 @@ TEST(DIJKSTRA_STD, TEST_4) {
   }
 }
 
-int V = 3;
+int V = 20;
 
 TEST(DIJKSTRA_STD, TEST_TIME) {
   Graph graph = getRandomGraph(V);
 
-  double start = omp_get_wtime();
+  auto t1 = clock();
   dijkstra_parallel(graph, 0, V);
-  double end = omp_get_wtime();
-  double ptime = end - start;
-  std::cout << "\tparallel time: " << ptime << "\n";
+  auto t2 = clock();
 
-  start = omp_get_wtime();
+  auto t3 = clock();
   dijkstra(graph, 0, V);
-  end = omp_get_wtime();
-  double stime = end - start;
-  std::cout << "\tsequential time: " << stime << "\n";
+  auto t4 = clock();
 
-  std::cout << "\tefficiency: " << stime / ptime << "\n";
+  printf("sequential time: %f\n", static_cast<float>(t4 - t3) / CLOCKS_PER_SEC);
+  printf("parallel time: %f\n", static_cast<float>(t2 - t1) / CLOCKS_PER_SEC);
+  printf("eff: %f\n", (static_cast<float>(t4 - t3) / CLOCKS_PER_SEC) /
+                          (static_cast<float>(t2 - t1) / CLOCKS_PER_SEC));
 }

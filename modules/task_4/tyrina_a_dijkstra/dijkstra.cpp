@@ -67,49 +67,15 @@ VectorInt dijkstra_parallel(const Graph& graph, int src, int V) {
   dist[src] = 0;
 
   for (int count = 0; count < V - 1; count++) {
-    int min = INT_MAX, u = 0;
+      int u = minDistance(dist, visited, V);
 
-      VectorInt local_min(V, INT8_MAX);
-      VectorInt local_ind(V);
+      visited[u] = true;
 
       int thread_num = 2;
       std::vector<std::thread> threads(thread_num);
       int delta = V / thread_num;
 
-      auto thread_func = [&visited, &dist, &local_min, &local_ind](int begin, int end,
-        int index) {
-          for (int i = begin; i < end; ++i)
-            if (!visited[i] && dist[i] <= local_min[index]) {
-              local_min[index] = dist[i];
-              local_ind[index] = i;
-            }
-      };
-
-      for (int index = 0; index < thread_num - 1; ++index) {
-        int begin = delta * index;
-        int end = delta * (index + 1);
-        threads[index] = std::thread(thread_func, begin, end, index);
-      }
-      threads[thread_num - 1] = std::thread(thread_func, delta * (thread_num - 1),
-        V, thread_num - 1);
-
-      for (auto&& i : threads) {
-        i.join();
-      }
-
-      threads.clear();
-      threads.resize(thread_num);
-
-      for (int i = 0; i < thread_num; i++) {
-        if (local_min[i] < min) {
-          min = local_min[i];
-          u = local_ind[i];
-        }
-      }
-
-      visited[u] = true;
-
-      auto thread_func1 = [&visited, &dist, &graph, u](int begin, int end,
+      auto thread_func = [&visited, &dist, &graph, u](int begin, int end,
         int index) {
           for (int v = begin; v < end; v++) {
             if (!visited[v] && graph[u][v] && dist[u] != INT_MAX &&
@@ -122,9 +88,9 @@ VectorInt dijkstra_parallel(const Graph& graph, int src, int V) {
       for (int index = 0; index < thread_num - 1; ++index) {
         int begin = delta * index;
         int end = delta * (index + 1);
-        threads[index] = std::thread(thread_func1, begin, end, index);
+        threads[index] = std::thread(thread_func, begin, end, index);
       }
-      threads[thread_num - 1] = std::thread(thread_func1, delta * (thread_num - 1),
+      threads[thread_num - 1] = std::thread(thread_func, delta * (thread_num - 1),
         V, thread_num - 1);
 
       for (auto&& i : threads) {
