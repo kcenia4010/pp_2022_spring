@@ -88,7 +88,7 @@ TEST(graham_scan_tbb, random_points) {
 }
 
 TEST(graham_scan_tbb, random_points_seq) {
-  int size = 10000;
+  int size = 1000;
   auto area = gen_random_points(size);
   std::vector<std::pair<double, double>> check(size);
 
@@ -98,7 +98,7 @@ TEST(graham_scan_tbb, random_points_seq) {
 }
 
 TEST(graham_scan_tbb, random_points_tbb) {
-  int size = 10000;
+  int size = 1000;
   auto area = gen_random_points(size);
   std::vector<std::pair<double, double>> check(size);
 

@@ -114,39 +114,39 @@ std::vector<std::pair<double, double>> tbb_graham_conv_hull(
     throw "Where are the threads?";
   }
 
-  std::vector<std::pair<double, double>> last_points;
+  std::vector<std::pair<double, double>> result;
   int step = (end - begin) / n_threads;
   tbb::task_group threads;
   tbb::spin_mutex mutex;
   
   tbb::task_scheduler_init init(static_cast<int>(n_threads));
 
-  for (int i = 0; i < n_threads; i++) {
+  for (std::size_t i = 0; i < n_threads; i++) {
     if (i == n_threads - 1) {
-      threads.run([&last_points, begin, end, step, n_threads, &mutex]() {
-        auto local_scan = graham_conv_hull(begin + step * (n_threads - 1), end);
-        for (int j = 0; j < local_scan.size(); j++) {
+      threads.run([&result, begin, end, step, n_threads, &mutex]() {
+        auto local_res = graham_conv_hull(begin + step * (n_threads - 1), end);
+        for (std::size_t j = 0; j < local_res.size(); j++) {
           tbb::spin_mutex::scoped_lock lock;
           lock.acquire(mutex);
-          last_points.push_back(local_scan[j]);
+          result.push_back(local_res[j]);
           lock.release();
         }
       });
       break;
     }
-    threads.run([&last_points, &mutex, i, begin, step]() {
+    threads.run([&result, &mutex, i, begin, step]() {
       auto left = begin + step * i;
       auto right = begin + step * (i + 1);
-      auto local_scan = graham_conv_hull(left, right);
-      for (std::size_t j = 0; j < local_scan.size(); ++j) {
+      auto local_res = graham_conv_hull(left, right);
+      for (std::size_t j = 0; j < local_res.size(); ++j) {
         tbb::spin_mutex::scoped_lock lock;
         lock.acquire(mutex);
-        last_points.push_back(local_scan[j]);
+        result.push_back(local_res[j]);
         lock.release();
       }
     });
   }
   threads.wait();
 
-  return graham_conv_hull(last_points.begin(), last_points.end());
+  return graham_conv_hull(result.begin(), result.end());
 }
