@@ -12,4 +12,4 @@ std::vector<int> evenBatch(std::vector<int> vec1, std::vector<int> vec2);
 std::vector<int> oddBatch(std::vector<int> vec1, std::vector<int> vec2);
 std::vector<int> GetRandVector(int size);
 
-#endif  // MODULES_TASK_KRIVOSHEEV_M_RADIX_SORT_W_BATCHER_BATCHER_H_
+#endif  // MODULES_TASK_3_KRIVOSHEEV_M_RADIX_SORT_W_BATCHER_BATCHER_H_
