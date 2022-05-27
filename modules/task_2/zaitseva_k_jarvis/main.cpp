@@ -56,7 +56,7 @@ TEST(OpenMP, Test_Generate_and_Draw) {
 
 TEST(OpenMP, Test_Compare_with_Seq) {
   double t1, t2, time_par, time_seq;
-  std::vector<Point> points = Generate(1000000);
+  std::vector<Point> points = Generate(10000);
   t1 = omp_get_wtime();
   std::vector<Point> res_par = Jarvis_parallel(points);
   t2 = omp_get_wtime();
