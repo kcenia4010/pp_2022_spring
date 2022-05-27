@@ -99,6 +99,6 @@ TEST(Radix_Sort_W_Batcher, Test_RadixSort_w_Batcher_Compare_Time) {
   std::cout << "Average OMP time (ms): " << avgTimeOMP << std::endl;
   std::cout << "Average seq time (ms): " << avgTimeSeq << std::endl;
   std::cout << "boost rate: " << avgTimeSeq / avgTimeOMP << "%" << std::endl;
-  for (int i = 0; i < res.size(); i++)
+  for (unsigned int i = 0; i < res.size(); i++)
     ASSERT_EQ(stl_mege[i], res[i]);
 }
