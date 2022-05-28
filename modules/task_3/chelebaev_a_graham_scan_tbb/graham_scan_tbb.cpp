@@ -13,7 +13,7 @@ std::vector<std::pair<double, double>> gen_random_points(std::size_t size) {
   return vec;
 }
 
-double get_polar_radius(const std::pair<double, double>& point) { 
+double get_polar_radius(const std::pair<double, double>& point) {
   return std::sqrt(point.second * point.second + point.first * point.first);
 }
 
@@ -113,14 +113,11 @@ std::vector<std::pair<double, double>> tbb_graham_conv_hull(
   if (n_threads == 0) {
     throw "Where are the threads?";
   }
-
   std::vector<std::pair<double, double>> result;
   int step = (end - begin) / n_threads;
   tbb::task_group threads;
   tbb::spin_mutex mutex;
-  
   tbb::task_scheduler_init init(static_cast<int>(n_threads));
-
   for (std::size_t i = 0; i < n_threads; i++) {
     if (i == n_threads - 1) {
       threads.run([&result, begin, end, step, n_threads, &mutex]() {
