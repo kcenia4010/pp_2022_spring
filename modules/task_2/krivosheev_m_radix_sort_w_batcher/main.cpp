@@ -1,11 +1,11 @@
 // Copyright 2022 Krivosheev Miron
 
+#include <time.h>
+#include <stdio.h>
 #include <gtest/gtest.h>
 #include <vector>
 #include "./batcher.h"
-#include <stdio.h>
 #include <ctime>
-#include <time.h>
 #include <numeric>
 
 TEST(Radix_Sort_W_Batcher, Test_CorrectSort) {
