@@ -5,7 +5,7 @@
 #include <omp.h>
 #include <vector>
 #include <string>
-#include <stdexcept>
+#include <algorithm>
 #include <iostream>
 #include <random>
 #include <utility>
