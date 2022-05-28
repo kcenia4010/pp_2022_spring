@@ -1,13 +1,14 @@
 // Copyright 2022 Chelebaev Artem
 #include "../../../modules/task_4/chelebaev_a_graham_scan_std/graham_scan_std.h"
-#include <thread>
-#include <mutex>
-#include <vector>
-#include <string>
-#include <stack>
-#include <iostream>
-#include <random>
+
 #include <cstring>
+#include <iostream>
+#include <mutex>
+#include <random>
+#include <stack>
+#include <string>
+#include <thread>
+#include <vector>
 
 std::vector<std::pair<double, double>> gen_random_points(std::size_t size) {
   std::mt19937 rand_r(time(0));
@@ -152,12 +153,9 @@ std::vector<std::pair<double, double>> std_graham_conv_hull(
       }
     });
   }
-  
   for (std::size_t i = 0; i < n_threads; ++i) {
     threads[i].join();
   }
   delete[] threads;
   return graham_conv_hull(result.begin(), result.end());
 }
-
-

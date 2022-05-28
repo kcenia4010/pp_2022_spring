@@ -89,7 +89,7 @@ TEST(graham_scan_std, random_points) {
 }
 
 TEST(graham_scan_std, random_points_seq) {
-  int size = 1000;
+  int size = 10000;
   auto area = gen_random_points(size);
   std::vector<std::pair<double, double>> check(size);
 
@@ -99,7 +99,7 @@ TEST(graham_scan_std, random_points_seq) {
 }
 
 TEST(graham_scan_std, random_points_std) {
-  int size = 1000;
+  int size = 10000;
   auto area = gen_random_points(size);
   std::vector<std::pair<double, double>> check(size);
 
