@@ -47,7 +47,7 @@ TEST(Radix_Sort_W_Batcher, Test_RadixSort_w_Batcher_Compare_Time) {
   std::vector<double> timesOMP, timesSeq;
   double avgTimeOMP, avgTimeSeq;
   clock_t start, end;
-  for (int i = 0; i < 3; ++i) {
+  for (int i = 1; i < 4; ++i) {
     part1 = GetRandVector(10000);
     part2 = GetRandVector(10000);
     start = clock();
