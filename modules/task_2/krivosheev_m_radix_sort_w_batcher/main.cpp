@@ -3,7 +3,6 @@
 #include <gtest/gtest.h>
 #include <vector>
 #include "./batcher.h"
-//#include "../../../modules/task_1/krivosheev_m_radix_sort_w_batcher/batcher.h"
 #include <stdio.h>
 #include <ctime>
 #include <time.h>
@@ -60,13 +59,13 @@ TEST(Radix_Sort_W_Batcher, Test_RadixSort_w_Batcher) {
 }
 
 TEST(Radix_Sort_W_Batcher, Test_RadixSort_w_Batcher_Compare_Time) {
-  std::vector<int> part1, part2, even, odd, res, stl_mege(40000);
+  std::vector<int> part1, part2, even, odd, res, stl_mege(2000);
   std::vector<double> timesOMP, timesSeq;
   double avgTimeOMP, avgTimeSeq;
   clock_t start, end;
   for (int i = 0; i < 3; ++i) {
-    part1 = GetRandVector(20000);
-    part2 = GetRandVector(20000);
+    part1 = GetRandVector(1000);
+    part2 = GetRandVector(1000);
     start = clock();
     radixSort(&part1);
     radixSort(&part2);
@@ -76,8 +75,8 @@ TEST(Radix_Sort_W_Batcher, Test_RadixSort_w_Batcher_Compare_Time) {
     end = clock();
     timesSeq.push_back(end - start);
 
-    part1 = GetRandVector(20000);
-    part2 = GetRandVector(20000);
+    part1 = GetRandVector(1000);
+    part2 = GetRandVector(1000);
     start = clock();
     radixSort(&part1);
     radixSort(&part2);
@@ -90,13 +89,13 @@ TEST(Radix_Sort_W_Batcher, Test_RadixSort_w_Batcher_Compare_Time) {
   std::merge(part1.begin(), part1.end(), part2.begin(),
     part2.end(), stl_mege.begin());
   for (int i = 0; i < 3; i++)
-    std::cout << "OMP time (ms): " << timesOMP[i] << std::endl;
+    std::cout << "TBB time (ms): " << timesOMP[i] << std::endl;
   for (int i = 0; i < 3; i++)
     std::cout << "Seq time (ms): " << timesSeq[i] << std::endl;
   std::cout << std::endl;
   avgTimeOMP = std::accumulate(timesOMP.begin(), timesOMP.end(), 0.0) / timesOMP.size();
   avgTimeSeq = std::accumulate(timesSeq.begin(), timesSeq.end(), 0.0) / timesSeq.size();
-  std::cout << "Average OMP time (ms): " << avgTimeOMP << std::endl;
+  std::cout << "Average TBB time (ms): " << avgTimeOMP << std::endl;
   std::cout << "Average seq time (ms): " << avgTimeSeq << std::endl;
   std::cout << "boost rate: " << avgTimeSeq / avgTimeOMP << "%" << std::endl;
   for (unsigned int i = 0; i < res.size(); i++)

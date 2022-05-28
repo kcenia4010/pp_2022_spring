@@ -25,7 +25,7 @@ void radixSort(std::vector<int> *vec) {
 
 void countSort(std::vector<int> *vec, int exp) {
     int size = vec->size();
-    std::vector<int> output(size);
+    std::vector<int> output(size*100);
     int i, count[10] = { 0 };
     tbb::task_scheduler_init init(THREADS);
     tbb::parallel_for(
@@ -42,10 +42,37 @@ void countSort(std::vector<int> *vec, int exp) {
     for (i = size - 1; i >= 0; i--) {
         output[count[(vec->at(i) / exp) % 10] - 1] = vec->at(i);
         count[(vec->at(i) / exp) % 10]--;
+        //std::cout << i;
     }
     for (i = 0; i < size; i++) {
         vec->at(i) = output[i];
     }
+}
+
+void countSortSeq(std::vector<int>* vec, int exp) {
+  int size = vec->size();
+  std::vector<int> output(size);
+  int i, count[10] = { 0 };
+  for (i = 0; i < size; i++) {
+    count[(vec->at(i) / exp) % 10]++;
+  }
+  for (i = 1; i < 10; i++) {
+    count[i] += count[i - 1];
+  }
+  for (i = size - 1; i >= 0; i--) {
+    output[count[(vec->at(i) / exp) % 10] - 1] = vec->at(i);
+    count[(vec->at(i) / exp) % 10]--;
+  }
+  for (i = 0; i < size; i++) {
+    vec->at(i) = output[i];
+  }
+}
+
+void radixSortSeq(std::vector<int>* vec) {
+  int max = getMax(vec);
+  for (int exp = 1; max / exp > 0; exp *= 10) {
+    countSortSeq(vec, exp);
+  }
 }
 
 int getMax(std::vector<int> *vec) {
@@ -187,8 +214,112 @@ std::vector<int> GetRandVector(int size) {
     std::mt19937 gen;
     std::vector<int> vec(size);
     for (int i = 0; i < size; i++) {
-        vec[i] = gen() % 1000;
+        vec[i] = gen() % 10000;
     }
 
     return vec;
+}
+
+std::vector<int> EvenOddBatch_seq(std::vector<int> vec1, std::vector<int> vec2) {
+  int size1 = vec1.size();
+  int size2 = vec2.size();
+  int size = size1 + size2;
+  std::vector<int> res(size);
+  int i = 0, j = 0, k = 0;
+
+  while ((j < size1) && (k < size2)) {
+    res[i] = vec1[j];
+    res[i + 1] = vec2[k];
+    i += 2;
+    j++;
+    k++;
+  }
+
+  if ((k >= size2) && (j < size1)) {
+    for (int l = i; l < size; l++) {
+      res[l] = vec1[j];
+      j++;
+    }
+  }
+
+  for (int i = 0; i < size - 1; i++) {
+    if (res[i] > res[i + 1]) {
+      std::swap(res[i], res[i + 1]);
+    }
+  }
+
+  return res;
+}
+
+std::vector<int> evenBatch_seq(std::vector<int> vec1, std::vector<int> vec2) {
+  int size1 = vec1.size();
+  int size2 = vec2.size();
+  int res_size = size1 / 2 + size2 / 2 + size1 % 2 + size2 % 2;
+  std::vector<int> res(res_size);
+  int i1 = 0;
+  int i2 = 0;
+  int i = 0;
+
+  while ((i1 < size1) && (i2 < size2)) {
+    if (vec1[i1] <= vec2[i2]) {
+      res[i] = vec1[i1];
+      i1 += 2;
+    }
+    else {
+      res[i] = vec2[i2];
+      i2 += 2;
+    }
+    i++;
+  }
+
+  if (i1 >= size1) {
+    for (int l = i2; l < size2; l += 2) {
+      res[i] = vec2[l];
+      i++;
+    }
+  }
+  else {
+    for (int l = i1; l < size1; l += 2) {
+      res[i] = vec1[l];
+      i++;
+    }
+  }
+  return res;
+}
+
+std::vector<int> oddBatch_seq(std::vector<int> vec1, std::vector<int> vec2) {
+  int size1 = vec1.size();
+  int size2 = vec2.size();
+  int res_size = size1 / 2 + size2 / 2;
+  std::vector<int> res(res_size);
+  int i1 = 1;
+  int i2 = 1;
+  int i = 0;
+
+  while ((i1 < size1) && (i2 < size2)) {
+    if (vec1[i1] <= vec2[i2]) {
+      res[i] = vec1[i1];
+      i1 += 2;
+    }
+    else {
+      res[i] = vec2[i2];
+      i2 += 2;
+    }
+    i++;
+  }
+
+  if (i1 >= size1) {
+    for (int l = i2; l < size2; l += 2) {
+      res[i] = vec2[l];
+      i++;
+    }
+  }
+  else {
+    for (int l = i1; l < size1; l += 2) {
+      res[i] = vec1[l];
+      i++;
+    }
+  }
+
+  return res;
 }
