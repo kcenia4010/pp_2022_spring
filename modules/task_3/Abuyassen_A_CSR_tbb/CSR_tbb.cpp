@@ -121,22 +121,24 @@ std::vector < std::complex < int >> tbb_multiply(const CSR & A,
     throw "Size error";
   CSR B_t = sparse_transpose(B);
   std::vector < std::complex < int >> result(A.rows * B.cols, 0);
-  tbb::parallel_for(0, A.rows, [ & ](int i) {
-    for (int j = A.row_ptr[i]; j < A.row_ptr[i + 1]; j++) {
-      int Ai = A.cols_index[j];
-      std::complex < int > Avalue = A.values[j];
-      for (int k = 0; k < B_t.rows; k++) {
-        std::complex < int > sum(0, 0);
-        for (int l = B_t.row_ptr[k]; l < B_t.row_ptr[k + 1]; l++)
-          if (Ai == B_t.cols_index[l]) {
-            sum += Avalue * B_t.values[l];
-            break;
+  tbb::parallel_for(tbb::blocked_range < int > (0, A.rows),
+    [ & ](tbb::blocked_range < int > r) {
+      for (int i = r.begin(); i < r.end(); i++)
+        for (int j = A.row_ptr[i]; j < A.row_ptr[i + 1]; j++) {
+          int Ai = A.cols_index[j];
+          std::complex < int > Avalue = A.values[j];
+          for (int k = 0; k < B_t.rows; k++) {
+            std::complex < int > sum(0, 0);
+            for (int l = B_t.row_ptr[k]; l < B_t.row_ptr[k + 1]; l++)
+              if (Ai == B_t.cols_index[l]) {
+                sum += Avalue * B_t.values[l];
+                break;
+              }
+            if (sum != std::complex < int > (0, 0)) {
+              result[i * B_t.rows + k] += sum;
+            }
           }
-        if (sum != std::complex < int > (0, 0)) {
-          result[i * B_t.rows + k] += sum;
         }
-      }
-    }
-  });
+    });
   return result;
 }
