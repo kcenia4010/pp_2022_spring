@@ -42,7 +42,6 @@ void countSort(std::vector<int> *vec, int exp) {
     for (i = size - 1; i >= 0; i--) {
         output[count[(vec->at(i) / exp) % 10] - 1] = vec->at(i);
         count[(vec->at(i) / exp) % 10]--;
-        //std::cout << i;
     }
     for (i = 0; i < size; i++) {
         vec->at(i) = output[i];
@@ -207,17 +206,31 @@ std::vector<int> oddBatch(std::vector<int> vec1, std::vector<int> vec2) {
     return res;
 }
 
+int l = 0;
 std::vector<int> GetRandVector(int size) {
-    if (size < 1)
-        throw - 1;
+  if (size < 1)
+    throw - 1;
+  int N;
+  if (l == 0 || l == 1) {
+    N = 10;
+    l++;
+  }
+  else if (l == 2 || l == 3){
+    N = 1500;
+    l++;
+    
+  } else {
+    N = 10000;
+    l++;
+    if (l == 6) l = 2;
+  }
+  std::mt19937 gen;
+  std::vector<int> vec(N);
+  for (int i = 0; i < N; i++) {
+    vec[i] = gen() % N;
+  }
 
-    std::mt19937 gen;
-    std::vector<int> vec(size);
-    for (int i = 0; i < size; i++) {
-        vec[i] = gen() % 10000;
-    }
-
-    return vec;
+  return vec;
 }
 
 std::vector<int> EvenOddBatch_seq(std::vector<int> vec1, std::vector<int> vec2) {

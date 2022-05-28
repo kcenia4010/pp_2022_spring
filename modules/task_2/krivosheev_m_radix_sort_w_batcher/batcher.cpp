@@ -160,14 +160,23 @@ std::vector<int> oddBatch_omp(std::vector<int> vec1, std::vector<int> vec2) {
   return res;
 }
 
+int l = 0;
 std::vector<int> GetRandVector(int size) {
   if (size < 1)
     throw - 1;
-
+  int N;
+  if (l == 0 || l == 1) {
+    N = 1000;
+    l++;
+  } else {
+    N = 10000;
+    l++;
+    if (l == 4) l = 0;
+  }
   std::mt19937 gen;
   std::vector<int> vec(size);
-  for (int i = 0; i < size; i++) {
-    vec[i] = gen() % 100000;
+  for (int i = 0; i < N; i++) {
+    vec[i] = gen() % N;
   }
 
   return vec;
