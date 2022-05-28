@@ -19,7 +19,7 @@ TEST(MonteKarloSequential, Test_X_On_Y) {
     auto parallelResult = getParallelMonteKarlo(integrableFunction, upperLimit,
         lowerLimit, amountOfPoints);
 
-    ASSERT_NEAR(seqResult, parallelResult, 2);
+    ASSERT_NEAR(seqResult, parallelResult, 4);
 }
 
 TEST(MonteKarloSequential, Test_Sin_X) {
@@ -34,7 +34,7 @@ TEST(MonteKarloSequential, Test_Sin_X) {
     auto parallelResult = getParallelMonteKarlo(integrableFunction, upperLimit,
         lowerLimit, amountOfPoints);
 
-    ASSERT_NEAR(seqResult, parallelResult, 2);
+    ASSERT_NEAR(seqResult, parallelResult, 4);
 }
 
 TEST(MonteKarloSequential, Test_Cos_X_On_X) {
@@ -49,7 +49,7 @@ TEST(MonteKarloSequential, Test_Cos_X_On_X) {
     auto parallelResult = getParallelMonteKarlo(integrableFunction, upperLimit,
         lowerLimit, amountOfPoints);
 
-    ASSERT_NEAR(seqResult, parallelResult, 2);
+    ASSERT_NEAR(seqResult, parallelResult, 4);
 }
 
 TEST(MonteKarloSequential, Test_Cos_X_On_Sin_X_On_X) {
@@ -64,7 +64,7 @@ TEST(MonteKarloSequential, Test_Cos_X_On_Sin_X_On_X) {
     auto parallelResult = getParallelMonteKarlo(integrableFunction, upperLimit,
         lowerLimit, amountOfPoints);
 
-    ASSERT_NEAR(seqResult, parallelResult, 2);
+    ASSERT_NEAR(seqResult, parallelResult, 4);
 }
 
 TEST(MonteKarloSequential, Test_Cos_X_On_Sin_X_On_Sin_X_On_X) {
@@ -81,5 +81,5 @@ TEST(MonteKarloSequential, Test_Cos_X_On_Sin_X_On_Sin_X_On_X) {
     auto parallelResult = getParallelMonteKarlo(integrableFunction, upperLimit,
         lowerLimit, amountOfPoints);
 
-    ASSERT_NEAR(seqResult, parallelResult, 2);
+    ASSERT_NEAR(seqResult, parallelResult, 4);
 }
