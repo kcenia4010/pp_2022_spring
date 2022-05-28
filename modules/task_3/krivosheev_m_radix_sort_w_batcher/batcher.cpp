@@ -214,11 +214,9 @@ std::vector<int> GetRandVector(int size) {
   if (l == 0 || l == 1) {
     N = 10;
     l++;
-  }
-  else if (l == 2 || l == 3){
+  } else if (l == 2 || l == 3) {
     N = 1500;
     l++;
-    
   } else {
     N = 10000;
     l++;
@@ -233,7 +231,8 @@ std::vector<int> GetRandVector(int size) {
   return vec;
 }
 
-std::vector<int> EvenOddBatch_seq(std::vector<int> vec1, std::vector<int> vec2) {
+std::vector<int> EvenOddBatch_seq(std::vector<int> vec1,
+  std::vector<int> vec2) {
   int size1 = vec1.size();
   int size2 = vec2.size();
   int size = size1 + size2;
@@ -277,8 +276,7 @@ std::vector<int> evenBatch_seq(std::vector<int> vec1, std::vector<int> vec2) {
     if (vec1[i1] <= vec2[i2]) {
       res[i] = vec1[i1];
       i1 += 2;
-    }
-    else {
+    } else {
       res[i] = vec2[i2];
       i2 += 2;
     }
@@ -290,8 +288,7 @@ std::vector<int> evenBatch_seq(std::vector<int> vec1, std::vector<int> vec2) {
       res[i] = vec2[l];
       i++;
     }
-  }
-  else {
+  } else {
     for (int l = i1; l < size1; l += 2) {
       res[i] = vec1[l];
       i++;
@@ -313,8 +310,7 @@ std::vector<int> oddBatch_seq(std::vector<int> vec1, std::vector<int> vec2) {
     if (vec1[i1] <= vec2[i2]) {
       res[i] = vec1[i1];
       i1 += 2;
-    }
-    else {
+    } else {
       res[i] = vec2[i2];
       i2 += 2;
     }
@@ -326,8 +322,7 @@ std::vector<int> oddBatch_seq(std::vector<int> vec1, std::vector<int> vec2) {
       res[i] = vec2[l];
       i++;
     }
-  }
-  else {
+  } else {
     for (int l = i1; l < size1; l += 2) {
       res[i] = vec1[l];
       i++;
