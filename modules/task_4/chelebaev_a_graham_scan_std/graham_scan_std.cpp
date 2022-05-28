@@ -3,11 +3,11 @@
 
 #include <cstring>
 #include <iostream>
-#include <mutex>
+#include <mutex> //NOLINT
 #include <random>
 #include <stack>
 #include <string>
-#include <thread>
+#include <thread> //NOLINT
 #include <vector>
 
 std::vector<std::pair<double, double>> gen_random_points(std::size_t size) {
