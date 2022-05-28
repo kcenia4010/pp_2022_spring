@@ -1,11 +1,11 @@
 // Copyright 2022 Krivosheev Miron
 
+#include <utility>
+#include <ctime>
 #include <vector>
 #include <string>
 #include <algorithm>
-#include <ctime>
 #include <random>
-#include <utility>
 #include "../../../modules/task_2/krivosheev_m_radix_sort_w_batcher/batcher.h"
 
 #define THREADS 4
